@@ -1,0 +1,1014 @@
+/* =========================================================
+   元デザイン（1800px幅モック）の実測値をそのままCSSへ落とし込む。
+   --s = 1px相当のスケール。calc(実測px * var(--s)) で比率を固定する。
+   ========================================================= */
+:root{
+  --s:min(1px,calc(100vw / 1800));
+  /* ---- PGロゴから実測した配色（左のターコイズ→右の濃紺） ----
+     #00a3c0 → #167cae → #374e93 → #22346d を単色にもグラデにも使う */
+  --pg-cyan:#00a3c0;
+  --pg-blue:#167cae;
+  --pg-mid:#374e93;
+  --pg-navy:#22346d;
+  --pg-navy-deep:#16224a;
+  /* ロゴのグラデーション（面に使う） */
+  /* 面に使うグラデの左端は、白文字のコントラストを確保するため
+     ロゴのターコイズ(#00a3c0)より一段締めた #0b8ea6 から始める */
+  --grad:linear-gradient(115deg,#0b8ea6 0%,#167cae 26%,#374e93 62%,#22346d 100%);
+  --grad-h:linear-gradient(90deg,#0b8ea6 0%,#167cae 30%,#374e93 66%,#22346d 100%);
+  --grad-deep:linear-gradient(125deg,#2b6f9e 0%,#374e93 32%,#22346d 70%,#16224a 100%);
+  --red:#22346d;        /* 基調の単色＝ロゴ右端の濃紺 */
+  --red2:#22346d;
+  --red-deep:#16224a;   /* hover・深い紺 */
+  --accent:#00a3c0;     /* ロゴ左端のターコイズ：効かせる場所だけ */
+  --accent-lt:#4fd6e6;  /* 濃紺の面に文字を乗せる時の明るいターコイズ */
+  --dark:#333333;
+  --ink:#22283a;
+  --pink:#eaf1f8;       /* 淡い紺の面 */
+  --navy:#22346d;
+  --gray:#eef1f5;
+  --gold:#f4d786;
+  --gold-y:#38c6dd;   /* FVキャッチ・バナーの強調（ロゴのターコイズ寄り） */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:var(--dark);background:#fff;
+  -webkit-font-smoothing:antialiased;line-height:1.8;overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+.sec{max-width:1800px;margin:0 auto;position:relative}
+/* アンカーで飛んだときに見出しが画面上端に貼り付かないようにする */
+section[id]{scroll-margin-top:calc(24 * var(--s))}
+.wrap{width:calc(1600 * var(--s));margin:0 auto}
+.wrap-n{width:calc(1200 * var(--s));margin:0 auto}
+.en{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;letter-spacing:.2em}
+.hl{background:var(--red);color:#fff;padding:.04em .22em}
+.hl-dark{background:var(--ink);color:#fff;padding:.04em .22em}
+.mark{color:var(--red)}
+/* 濃い面の上ではターコイズを使って可読性を確保する */
+.trouble .mark,.about .mark,.offer .mark,.hero-copy .yt,
+.reason-title h2 em,.rcard .hl-dark .mark,.repeat-band .mark{color:var(--accent-lt)}
+/* 白いカード本文の強調はロゴの濃紺＋ターコイズの下線で（ターコイズ文字は白地で薄い） */
+.rcard p .mark{color:var(--pg-navy);font-weight:900;border-bottom:calc(3 * var(--s)) solid var(--pg-cyan);padding-bottom:.06em}
+
+/* 見出し（ゴースト英字＋日本語） */
+.sec-head{position:relative;text-align:center}
+.sec-head .ghost{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:900;white-space:nowrap;line-height:1;
+  font-size:max(74px,calc(230 * var(--s)));pointer-events:none;z-index:0;
+}
+.sec-head h2{position:relative;z-index:1;font-size:max(23px,calc(64 * var(--s)));font-weight:900;letter-spacing:.08em}
+
+/* 赤いピルボタン */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:calc(26 * var(--s));
+  width:min(calc(1000 * var(--s)),92%);min-height:calc(150 * var(--s));
+  background:var(--grad-h);color:#fff;font-weight:700;border-radius:100px;
+  font-size:max(15px,calc(40 * var(--s)));letter-spacing:.04em;
+  box-shadow:0 calc(10 * var(--s)) calc(26 * var(--s)) rgba(34,52,109,.34);
+  transition:transform .25s ease,background .25s ease,box-shadow .25s ease,filter .25s ease;
+}
+.btn:hover{transform:translateY(-3px);filter:saturate(1.15) brightness(.94)}
+.btn .arw{
+  width:calc(56 * var(--s));height:calc(56 * var(--s));border-radius:50%;
+  border:calc(2 * var(--s)) solid rgba(255,255,255,.9);flex:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.btn .arw svg{width:45%;fill:#fff}
+
+/* ============ FV（参考サイトの配置・サイズ感に合わせた構成） ============ */
+.hero{
+  overflow-x:clip;
+  /* アウトライン文字を下のナビ帯に食い込ませるため、はみ出しを許可する
+     （背景写真は .hero-bg 側で切る） */
+  position:relative;max-width:1800px;margin:0 auto;overflow:visible;
+  min-height:calc(1010 * var(--s));background:#1c1c1c;display:flex;flex-direction:column;
+}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(14,14,14,.9) 0%,rgba(18,18,18,.72) 34%,rgba(18,18,18,.3) 58%,rgba(18,18,18,.5) 100%);
+}
+
+
+/* 上部バー */
+.hero-top{display:flex;align-items:center;gap:calc(22 * var(--s));padding:calc(22 * var(--s)) calc(26 * var(--s)) 0}
+.hero-top .logo{width:calc(306 * var(--s));min-width:120px}
+.hero-top .zenkoku{
+  border:1px solid rgba(255,255,255,.72);border-radius:4px;color:#fff;font-weight:700;
+  font-size:max(9px,calc(20 * var(--s)));padding:calc(7 * var(--s)) calc(18 * var(--s));white-space:nowrap;
+}
+.hero-banner{
+  margin-left:auto;display:flex;align-items:stretch;border:1px solid rgba(255,255,255,.25);
+  white-space:nowrap;transition:transform .25s ease,box-shadow .25s ease;
+}
+.hero-banner:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.4)}
+.hero-banner .bk{background:#1f1f1f;display:flex;align-items:center;padding:calc(8 * var(--s)) calc(18 * var(--s))}
+.hero-banner .rd{background:var(--grad-h);display:flex;align-items:center;gap:calc(12 * var(--s));padding:calc(8 * var(--s)) calc(22 * var(--s))}
+.hero-banner .t1{color:#fff;font-size:max(8px,calc(16 * var(--s)));font-weight:700;line-height:1.35;text-align:center}
+.hero-banner .t1 em{display:block;font-style:normal;color:var(--gold-y);border-bottom:1px solid var(--gold-y)}
+.hero-banner .t2{color:#fff;font-weight:900;font-size:max(11px,calc(28 * var(--s)))}
+.hero-banner .t2 span{color:var(--gold-y)}
+.hero-banner .t3{color:#fff;font-size:max(9px,calc(17 * var(--s)))}
+
+.hero-top,.hero-main,.hero-nav{position:relative;z-index:2}
+/* 左=キャッチ／右=メダル。同じgridに置くので構造的に重ならない */
+.hero-main{
+  display:grid;grid-template-columns:minmax(0,1fr) max-content;align-items:start;
+  column-gap:clamp(12px,calc(30 * var(--s)),30px);row-gap:calc(24 * var(--s));padding:calc(54 * var(--s)) calc(42 * var(--s)) 0 calc(45 * var(--s));
+}
+.hero-left{min-width:0;max-width:100%}
+.hero-copy{min-width:0;max-width:100%;font-weight:900;line-height:1.1;letter-spacing:.02em}
+.hero-sub .br-sp{display:none}
+.hero-sub{
+  margin-top:calc(28 * var(--s));color:#fff;font-weight:700;
+  font-size:max(11px,calc(28 * var(--s)));letter-spacing:.05em;
+}
+.hero-right{min-width:max-content;display:flex;flex-direction:column;align-items:flex-end;flex:none;margin-top:calc(300 * var(--s))}
+.medals{display:flex;gap:calc(16 * var(--s));flex:none}
+.medals-note{margin-top:calc(14 * var(--s));color:rgba(255,255,255,.8);font-size:max(8px,calc(15 * var(--s)))}
+
+/* キャッチ（2行組み） */
+
+/* 1行目「工務店のYouTube制作なら」／2行目「ピュアグロース」 */
+.hero-copy .l1{
+  display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;gap:.14em;color:#fff;
+  font-size:clamp(24px,calc(74 * var(--s)),74px);
+  text-shadow:0 calc(6 * var(--s)) calc(20 * var(--s)) rgba(0,0,0,.5);
+}
+.hero-copy .l1 small{font-size:.72em;color:#fff}
+.hero-copy .box{background:var(--red);color:#fff;font-size:1em;padding:.06em .16em;line-height:1.15}
+.hero-copy .l2{display:block;margin-top:calc(14 * var(--s));white-space:nowrap}
+.hero-copy .l2 b{color:var(--gold-y);font-size:clamp(34px,calc(120 * var(--s)),120px);line-height:1;
+  text-shadow:0 calc(6 * var(--s)) calc(20 * var(--s)) rgba(0,0,0,.5)}
+
+
+/* 大きな YouTube アウトライン文字 */
+.hero-outline{
+  /* 文字の下端が下の青いナビ帯に接する位置（行送りで下に55pxはみ出す分を差し引いた値） */
+  /* 画面幅いっぱいまで大きくし、下端をナビ帯に食い込ませる（参考サイトと同じ見せ方） */
+  position:absolute;left:0;right:0;bottom:0;z-index:1;
+  font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:900;font-size:calc(520 * var(--s));line-height:.78;
+  text-align:left;white-space:nowrap;
+  transform:scaleX(.73);transform-origin:left bottom;
+  color:transparent;letter-spacing:-.03em;pointer-events:none;
+  -webkit-text-stroke:calc(3 * var(--s)) rgba(0,182,201,.9);
+}
+.hero-catch{
+  /* 人物と同じ横位置・同じ幅の中央寄せにして、人物グループの真上に置く */
+  position:absolute;left:calc(16 * var(--s));width:calc(548 * var(--s));bottom:calc(360 * var(--s));z-index:3;
+  text-align:center;
+  color:#fff;font-weight:900;font-size:max(13px,calc(40 * var(--s)));letter-spacing:.04em;white-space:nowrap;
+  text-shadow:0 calc(4 * var(--s)) calc(16 * var(--s)) rgba(0,0,0,.55);
+}
+.hero-catch::before,.hero-catch::after{content:"／";display:inline-block;margin:0 .4em;color:#fff}
+.hero-catch::before{transform:scaleX(-1)}
+.hero-crew{
+  /* 目標サイトと同じく、左下に配置。足元が次セクションに切れないよう少し持ち上げる */
+  position:absolute;left:calc(40 * var(--s));bottom:0;z-index:3;
+  display:flex;align-items:flex-end;
+}
+.hero-crew img{
+  height:calc(330 * var(--s));width:auto;flex:none;
+  filter:drop-shadow(0 calc(10 * var(--s)) calc(24 * var(--s)) rgba(0,0,0,.55));
+}
+.hero-crew .c1{margin-right:calc(-24 * var(--s))}
+.hero-crew .c2{margin-right:calc(-20 * var(--s))}
+/* PCではラッパーを透過（子のcatch/crewは従来どおり.hero基準の絶対配置） */
+.hero-lower{display:contents}
+
+/* 実績メダル */
+
+.medal{
+  width:calc(176 * var(--s));height:calc(176 * var(--s));border-radius:50%;
+  background:linear-gradient(145deg,#f9ecbb 0%,#d9ae4a 26%,#b8801f 48%,#f7e3a3 68%,#c9962f 88%,#8f6212 100%);
+  padding:calc(8 * var(--s));box-shadow:0 calc(8 * var(--s)) calc(22 * var(--s)) rgba(0,0,0,.45);transition:transform .4s ease;
+}
+.medal:hover{transform:translateY(-4px)}
+.medal-in{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 50% 32%,#22262e 0%,#0d1015 72%,#05070a 100%);
+  box-shadow:inset 0 0 0 1px rgba(248,230,168,.55);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.25;padding:0 9%;
+}
+.medal .lbl{font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;font-weight:600;color:#fff;font-size:max(8px,calc(16 * var(--s)));white-space:nowrap}
+.medal .lbl.sm{font-size:max(8px,calc(15 * var(--s)));opacity:.95}
+.medal .val{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;font-weight:700;color:var(--gold);line-height:1;margin-top:.16em;
+  font-size:max(20px,calc(46 * var(--s)));white-space:nowrap;display:flex;align-items:baseline;justify-content:center;
+}
+.medal .val .u{font-size:.4em;color:#fff;font-weight:700;margin-left:.06em}
+.medal .val .u2{font-size:.52em;color:var(--gold);font-weight:700}
+
+
+/* 下部ナビ（2行×4列） */
+.hero-nav{
+  /* 目標サイトと同じ、左に人物のスペースを空けて右側に2行×4列で並べる */
+  max-width:1800px;margin:0 auto;background:var(--grad-h);
+  display:grid;grid-template-columns:repeat(4,max-content);justify-content:space-between;
+  column-gap:calc(30 * var(--s));row-gap:calc(14 * var(--s));
+  padding:calc(26 * var(--s)) calc(70 * var(--s)) calc(26 * var(--s)) calc(640 * var(--s));
+}
+.hero-nav a{
+  color:#fff;font-weight:700;font-size:max(10px,calc(22 * var(--s)));letter-spacing:.01em;white-space:nowrap;
+  display:flex;align-items:center;gap:.5em;transition:opacity .2s ease;
+}
+.hero-nav a::before{content:"▶";font-size:.6em;color:#fff}
+.hero-nav a:hover{opacity:.7}
+
+
+@media (max-width:900px){
+  :root{--s:calc(100vw / 900)}
+  /* FVは画面高から追従バー分を引いた高さ。帯のすぐ下にテーマ紹介が続き、無駄な空白を作らない */
+  .hero{min-height:calc(100vh - 86px);min-height:calc(100svh - 86px)}
+  .hero-bg img{object-position:50% 18%}
+  .hero-top{flex-wrap:wrap;gap:calc(14 * var(--s));padding:calc(22 * var(--s)) 4% 0}
+  .hero-top .logo{width:calc(260 * var(--s))}
+  .hero-banner{display:none}
+  /* コピー＋サブは通常フロー（z-index:2で背景の上）で最上部に。実績は下部の帯として絶対配置 */
+  /* position:staticで帯の基準を .hero に戻す。z-index:6でhero-main内の帯(z5)を人物(hero-lower z3)より前面へ */
+  .hero-main{position:static;z-index:6;grid-template-columns:1fr;padding:calc(150 * var(--s)) 4% 0;gap:0;flex:none}
+  .hero-left{min-width:0;max-width:58%}
+  /* 帯を画面下端まで伸ばし、同じ青グラデのテーマ帯と地続きにする。メダルは追従バーに隠れないよう下パディングで上側に保持 */
+  .hero-right{position:absolute;left:0;right:0;bottom:0;z-index:5;background:var(--grad-h);
+    align-items:center;padding:calc(20 * var(--s)) 4% calc(18 * var(--s));margin:0}
+  /* ①「工務店のYouTube制作なら」を1行に収める上限（7.1vw）／2行目はピュアグロースのみ */
+  .hero-copy .l1{font-size:min(calc(78 * var(--s)),4.7vw)}
+  .hero-copy .l2{margin-top:calc(10 * var(--s))}
+  .hero-copy .l2 b{font-size:min(calc(120 * var(--s)),9vw)}
+  /* ③ サブコピーは文字を大きく */
+  .hero-sub{margin-top:calc(26 * var(--s));font-size:calc(34 * var(--s));line-height:1.7}
+  .hero-sub .br-sp{display:inline}
+  .hero-sub .sp-dot{display:none}
+  .medals{justify-content:center;gap:calc(12 * var(--s))}
+  .medal{width:calc(252 * var(--s));height:calc(252 * var(--s))}
+  .medal .lbl,.medal .lbl.sm{font-size:calc(23 * var(--s))}
+  .medal .val{font-size:calc(64 * var(--s))}
+  .medals-note{text-align:center;font-size:calc(22 * var(--s))}
+  /* ④ 薄い「YouTube」アウトライン文字はスマホでは出さない */
+  .hero-outline{display:none}
+  /* キャッチ＋人物は絶対配置。下部の実績帯の上に立たせ、帯が人物の足元（切れ目）を覆う */
+  .hero-lower{position:absolute;left:0;right:0;bottom:75px;z-index:3;
+    display:flex;flex-direction:column;align-items:center;gap:calc(8 * var(--s));margin:0}
+  .hero-catch{position:static;display:block;width:auto;left:auto;transform:none;text-align:center;padding:0;margin:0;font-size:calc(38 * var(--s))}
+  .hero-crew{position:static;display:flex;left:auto;bottom:auto;transform:none;justify-content:center;align-items:flex-end;margin:0}
+  .hero-crew img{height:calc(380 * var(--s))}
+  .hero-crew .c1{margin-right:calc(-14 * var(--s))}
+  .hero-crew .c2{margin-right:calc(-12 * var(--s))}
+  /* 文字が小さく、下に無駄な余白（旧padding-bottom 120）があったので整える */
+  /* 下端の追従バー（約86px）にリンクが隠れないよう、その分だけ下を空ける */
+  /* PCのgrid指定を解除して、もとの2列折り返しに戻す */
+  .hero-nav{display:flex;flex-wrap:wrap;justify-content:flex-start;
+    padding:calc(17 * var(--s)) 5%;column-gap:calc(20 * var(--s));row-gap:calc(11 * var(--s))}
+  /* 行間を半分に。上下の無駄な余白も同時に縮小 */
+  .hero-nav a{width:46%;font-size:calc(28 * var(--s));padding:calc(7 * var(--s)) 0}
+}
+
+/* 右下フローティング（画面に追従／クリックでフォームへ） */
+.hero-float{
+  position:fixed;right:16px;bottom:150px;z-index:60;width:min(340px,calc(340 * var(--s)),86vw);
+  background:rgba(18,18,18,.95);border:1px solid rgba(255,255,255,.2);
+  padding:18px 16px 16px;text-align:center;box-shadow:0 14px 36px rgba(0,0,0,.55);
+  transition:opacity .35s ease,transform .35s ease,box-shadow .25s ease;
+}
+.hero-float:hover{box-shadow:0 18px 44px rgba(0,0,0,.65)}
+.hero-float.hide,.hero-float.form-mode{opacity:0;transform:translateY(24px);pointer-events:none}
+.hero-float a{display:block}
+.hero-float .close{
+  position:absolute;top:-13px;right:-13px;width:30px;height:30px;border-radius:50%;
+  background:#111;border:1px solid rgba(255,255,255,.45);color:#fff;cursor:pointer;
+  font-size:15px;line-height:1;z-index:2;
+}
+.hero-float .close:hover{background:var(--red);border-color:var(--red)}
+.hero-float .ribbon{display:block;
+  background:var(--gold-y);color:#1b1b1b;font-weight:900;font-size:15px;padding:5px 0;
+  clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);
+}
+.hero-float .lead{display:block;color:#fff;font-size:12px;font-weight:700;margin-top:12px}
+.hero-float .main{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px}
+/* 「成功事例集／プレゼント」は2段組みにして枠内に収める（横並びだとはみ出す） */
+.hero-float .main{gap:4px}
+.hero-float .main img{width:34px;height:auto;flex:none}
+.hero-float .main img.r{transform:scaleX(-1)}
+.hero-float .main .t{color:#fff;font-weight:900;line-height:1.15;display:flex;flex-direction:column;
+  align-items:center;gap:1px;white-space:nowrap;min-width:0}
+.hero-float .main .t1{font-size:17px}
+.hero-float .main .t2{font-size:27px;color:var(--gold);letter-spacing:.01em}
+.hero-float .menu{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+.hero-float .menu span{border:1px solid rgba(255,255,255,.55);color:#fff;font-weight:700;font-size:12px;padding:6px 0}
+.hero-float .go{
+  display:block;margin-top:12px;background:var(--grad-h);color:#fff;font-weight:700;font-size:13px;
+  padding:9px 0;border-radius:100px;transition:background .25s ease;
+}
+.hero-float:hover .go{background:var(--red-deep)}
+
+/* フローティングバナー：2つの反響ボタン */
+.hero-float .fb-wrap{display:none;flex-direction:column;gap:10px;margin-top:12px}
+.hero-float .fb-pc{display:block}
+.hero-float .fb{display:block;text-align:center;font-weight:800;font-size:14px;padding:12px 10px;border-radius:100px;letter-spacing:.02em;transition:filter .2s ease,transform .2s ease}
+.hero-float .fb b{font-weight:900;font-size:.85em;margin-left:2px}
+/* 左：薄い青（グラデの明るい側の単色）／右：濃い青の単色 */
+.hero-float .fb-a{background:var(--accent-lt);color:var(--pg-navy)}
+.hero-float .fb-b{background:var(--pg-navy);color:#fff}
+.hero-float .fb:hover{filter:brightness(.94);transform:translateY(-2px)}
+
+/* フォーム表示中の進捗ウィジェット（バナーと同じ位置） */
+.form-progress{
+  position:fixed;right:16px;bottom:150px;z-index:61;width:min(420px,88vw);
+  background:#f2f5f9;border:1px solid #cbd3df;border-radius:10px;
+  padding:22px 26px;box-shadow:0 14px 36px rgba(0,0,0,.28);
+  opacity:0;transform:translateY(24px);pointer-events:none;
+  transition:opacity .35s ease,transform .35s ease;
+}
+.form-progress.show{opacity:1;transform:none;pointer-events:auto}
+.form-progress .fp-tag{display:inline-block;background:var(--grad-h);color:#fff;font-weight:900;font-size:15px;padding:6px 18px;border-radius:5px;margin-bottom:14px}
+.form-progress .fp-body{display:flex;align-items:center;gap:12px}
+.form-progress .fp-bar{flex:1;height:13px;background:#d6dde7;border-radius:100px;overflow:hidden}
+.form-progress .fp-bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:100px;transition:width .4s ease}
+.form-progress .fp-txt{color:var(--pg-navy);font-weight:800;font-size:16px;white-space:nowrap}
+.form-progress .fp-txt b{color:var(--accent);font-size:28px;margin:0 4px}
+.form-progress.done .fp-bar i{background:#2bb673}
+.form-progress.done .fp-txt b{color:#2bb673}
+
+
+/* ============ お悩み ============ */
+.trouble{
+  background:linear-gradient(160deg,rgba(34,52,109,.94),rgba(22,34,74,.97)),url(../img/bg-about.jpg) center/cover no-repeat,var(--pg-navy);color:#fff;
+  padding:calc(80 * var(--s)) 0 calc(185 * var(--s));
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 170 * var(--s)),50% 100%,0 calc(100% - 170 * var(--s)));
+}
+/* 「こんなお悩みはありませんか？」が折り返さない上限（6vw）を掛けている */
+.trouble h2{text-align:center;font-size:min(max(19px,calc(66 * var(--s))),6vw);font-weight:900;line-height:1.85;letter-spacing:.04em}
+/* 4項目すべて1行に収まる幅・文字サイズにしている（変更時は要再計測） */
+.trouble-list{
+  /* 3項目なので3列。2列だと右下が空いて間延びする */
+  width:calc(1700 * var(--s));max-width:96%;margin:calc(56 * var(--s)) auto 0;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(22 * var(--s)) calc(22 * var(--s));
+}
+.trouble-list li{
+  list-style:none;background:rgba(0,0,0,.55);
+  padding:calc(20 * var(--s)) calc(24 * var(--s));display:flex;gap:calc(14 * var(--s));align-items:flex-start;
+  font-size:max(11px,calc(22 * var(--s)));font-weight:700;line-height:1.6;
+}
+.trouble-list svg{width:1.25em;flex:none;margin-top:.18em;stroke:var(--accent-lt);fill:none;stroke-width:2.4}
+
+/* ============ 活用企業の紹介 ============ */
+.usecase{background:#fff;padding:calc(96 * var(--s)) 0 calc(30 * var(--s))}
+.usecase .lead{text-align:center;font-weight:900;line-height:1.7;letter-spacing:.03em;font-size:max(16px,calc(44 * var(--s)))}
+.usecase .lead small{display:block;font-size:.58em;color:#666;font-weight:700;margin-bottom:.6em;letter-spacing:.06em}
+.usecase-grid{
+  width:calc(1600 * var(--s));max-width:96%;margin:calc(56 * var(--s)) auto 0;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(30 * var(--s));
+}
+.uc-card{
+  background:#fff;border:1px solid #dbe6f1;box-shadow:0 calc(3 * var(--s)) calc(16 * var(--s)) rgba(34,52,109,.07);
+  padding:calc(38 * var(--s)) calc(40 * var(--s)) calc(34 * var(--s));display:flex;flex-direction:column;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.uc-card:hover{transform:translateY(-4px);box-shadow:0 calc(14 * var(--s)) calc(34 * var(--s)) rgba(34,52,109,.16)}
+.uc-head{display:flex;align-items:center;gap:calc(24 * var(--s))}
+.uc-head img{width:calc(112 * var(--s));height:calc(112 * var(--s));border-radius:50%;object-fit:cover;flex:none;border:calc(3 * var(--s)) solid var(--pink)}
+.uc-head>div{min-width:0}
+/* 会社名・チャンネル名は必ず1行（PCは3列で列幅が狭いため上限を別途掛ける） */
+.uc-head .co{font-size:max(14px,calc(34 * var(--s)));font-weight:900;letter-spacing:.02em;white-space:nowrap}
+.uc-head .ch{font-size:max(10px,calc(19 * var(--s)));color:#777;font-weight:700;margin-top:calc(4 * var(--s));white-space:nowrap}
+@media (min-width:901px){
+  .uc-head .co{font-size:min(calc(34 * var(--s)),1.6vw)}
+  .uc-head .ch{font-size:min(calc(19 * var(--s)),1.0vw)}
+  .uc-meta .num b{font-size:min(calc(88 * var(--s)),3vw)}
+  .uc-meta .num i{font-size:min(calc(32 * var(--s)),1.15vw)}
+  .uc-meta .num small{font-size:min(calc(34 * var(--s)),1.35vw)}
+}
+/* 「ラベル＋値」を1行ずつ縦に積む（横1列だと3カラムの幅に収まらない） */
+.uc-meta{display:flex;flex-direction:column;align-items:stretch;gap:calc(10 * var(--s));
+  margin-top:calc(28 * var(--s));padding-bottom:calc(20 * var(--s));border-bottom:1px dashed #e2d2d2}
+/* ラベルは数字の左横に置く（上に積むと左に寄って見えるため） */
+.uc-meta .num{display:flex;flex-direction:row;align-items:baseline;justify-content:flex-start;width:100%;gap:calc(16 * var(--s));color:var(--red);font-family:Montserrat,"Noto Sans JP",sans-serif;font-weight:900;line-height:1;white-space:nowrap;flex-wrap:nowrap}
+.uc-meta .num small{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:max(13px,calc(34 * var(--s)));color:#555;font-weight:700;line-height:1.4;white-space:nowrap}
+/* PC3列で溢れないよう、基本ルールの後に上限を効かせる */
+@media (min-width:901px){
+  .uc-meta .num b{font-size:min(calc(88 * var(--s)),2.7vw)}
+  .uc-meta .num i{font-size:min(calc(32 * var(--s)),1.1vw)}
+  .uc-meta .num small{font-size:min(calc(34 * var(--s)),1.15vw)}
+}
+.uc-meta .num .v{display:flex;align-items:baseline;gap:.15em;white-space:nowrap;flex:none}
+.uc-meta .num b{font-size:max(30px,calc(88 * var(--s)))}
+.uc-meta .num i{font-style:normal;font-size:max(14px,calc(32 * var(--s)))}
+.uc-meta .lbl{display:flex;align-items:baseline;gap:calc(12 * var(--s));
+  font-size:max(9px,calc(18 * var(--s)));color:#666;font-weight:700;line-height:1.5;white-space:nowrap}
+.uc-meta .lbl em{font-style:normal;color:var(--dark);font-size:1.35em;font-weight:900}
+.uc-card p{margin-top:calc(22 * var(--s));font-size:max(11px,calc(21 * var(--s)));line-height:1.9;font-weight:500}
+.uc-btn{
+  margin-top:auto;display:flex;align-items:center;justify-content:center;gap:calc(14 * var(--s));
+  background:var(--grad-h);color:#fff;font-weight:700;font-size:max(11px,calc(22 * var(--s)));
+  padding:calc(16 * var(--s)) 0;border-radius:100px;transition:filter .25s ease;
+}
+.uc-btn i{width:1.6em;height:1.6em;border-radius:50%;background:rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;flex:none}
+.uc-btn i svg{width:.7em;fill:#fff}
+.uc-card:hover .uc-btn{filter:saturate(1.15) brightness(.94)}
+@media (max-width:900px){
+  .usecase{padding:calc(70 * var(--s)) 0 calc(20 * var(--s))}
+  .usecase .lead{font-size:calc(36 * var(--s))}
+  .usecase-grid{width:94%;grid-template-columns:1fr;gap:calc(28 * var(--s))}
+  .uc-head img{width:calc(140 * var(--s));height:calc(140 * var(--s))}
+  /* スマホは1カラムで幅に余裕があるので、登録者数と運用開始を横に並べる */
+  .uc-meta{flex-direction:row;align-items:baseline;gap:calc(26 * var(--s))}
+}
+
+/* ============ ブリッジ ============ */
+.bridge{text-align:center;padding:calc(48 * var(--s)) 0 calc(70 * var(--s))}
+.bridge .dots{width:calc(78 * var(--s));margin:0 auto calc(34 * var(--s))}
+.bridge p{font-size:max(17px,calc(48 * var(--s)));font-weight:900;line-height:1.8;letter-spacing:.04em}
+/* 「ピュアグロースが動画を通じて」が折り返さない上限（6.1vw）を掛けている */
+.bridge .em{font-size:min(1.42em,5.7vw);line-height:1.6;display:inline-block;margin-top:.12em}
+
+/* ============ WORKS ============ */
+.works{background:var(--pink);padding:calc(120 * var(--s)) 0 calc(101 * var(--s))}
+.works .sec-head{margin-bottom:calc(102 * var(--s))}
+.works .sec-head .ghost{color:#fff;opacity:.9}
+.wcard{
+  width:calc(1600 * var(--s));margin:0 auto calc(50 * var(--s));background:#fff;
+  padding:0 calc(50 * var(--s)) calc(109 * var(--s));
+}
+.wcard:last-of-type{margin-bottom:0}
+.wcard-head{position:relative;text-align:center;height:calc(315 * var(--s));padding-top:calc(80 * var(--s))}
+.wcard-icon{
+  width:calc(90 * var(--s));height:calc(90 * var(--s));border-radius:50%;
+  background:var(--pink);display:flex;align-items:center;justify-content:center;margin:0 auto calc(24 * var(--s));
+}
+.wcard-icon svg{width:56%;stroke:var(--red);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.wcard-head h3{font-size:max(19px,calc(52 * var(--s)));font-weight:900;letter-spacing:.1em;line-height:1}
+.view-more{
+  position:absolute;right:0;top:calc(209 * var(--s));
+  width:calc(300 * var(--s));height:calc(56 * var(--s));
+  display:inline-flex;align-items:center;justify-content:center;gap:calc(20 * var(--s));
+  background:var(--gray);border-radius:100px;
+  font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;letter-spacing:.14em;
+  font-size:max(9px,calc(19 * var(--s)));transition:all .25s ease;
+}
+.view-more i{
+  width:calc(38 * var(--s));height:calc(38 * var(--s));border-radius:50%;background:var(--grad-h);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.view-more i svg{width:40%;fill:#fff}
+.view-more:hover{background:var(--grad-h);color:#fff}
+.view-more:hover i{background:#fff}
+.view-more:hover i svg{fill:var(--red)}
+.wrow{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(20 * var(--s))}
+.wcard-item{display:block}
+.wthumb{position:relative;aspect-ratio:360/203;overflow:hidden;background:#111}
+.wthumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+/* サムネイルのホバー拡大は無効化 */
+.wcard-item:hover .wthumb img{transform:none}
+.wthumb .play{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.85);
+  width:22%;aspect-ratio:16/11;border-radius:calc(8 * var(--s));background:rgba(34,52,109,.94);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease,transform .3s ease;
+}
+.wthumb .play svg{width:34%;fill:#fff}
+.wcard-item:hover .wthumb .play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+/* 1行目の【会社名／テーマ】は必ず1行に収める */
+.wcap b{display:block;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (min-width:901px){.wcap b{font-size:min(1em,0.9vw)}}
+.wcap{margin-top:calc(33 * var(--s));font-size:max(10px,calc(19 * var(--s)));line-height:1.6}
+
+/* ============ ABOUT ============ */
+.about{background:var(--grad-deep);color:#fff;padding:calc(88 * var(--s)) 0 calc(80 * var(--s));overflow:hidden}
+.about .sec-head .ghost{color:rgba(255,255,255,.13);font-size:calc(180 * var(--s))}
+.about .sec-head h2{font-size:max(22px,calc(58 * var(--s)));line-height:1.35;letter-spacing:.04em}
+.about-list{margin-top:calc(80 * var(--s));display:flex;flex-direction:column;gap:calc(120 * var(--s));width:100%}
+.about-item{
+  position:relative;display:grid;grid-template-columns:1fr calc(800 * var(--s));
+  align-items:center;gap:calc(70 * var(--s));width:100%;
+}
+.about-item .about-txt{padding-left:calc(200 * var(--s))}
+.about-item.rev{grid-template-columns:calc(800 * var(--s)) 1fr}
+.about-item.rev .about-txt{order:2;padding-left:calc(60 * var(--s));padding-right:calc(200 * var(--s))}
+.about-item .num{
+  position:absolute;right:calc(60 * var(--s));top:calc(-90 * var(--s));
+  font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:900;font-size:calc(210 * var(--s));
+  color:rgba(255,255,255,.15);line-height:1;pointer-events:none;
+}
+.about-item.rev .num{right:auto;left:calc(60 * var(--s))}
+.about-txt .eyebrow{
+  font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;font-style:italic;letter-spacing:.14em;
+  font-size:max(10px,calc(22 * var(--s)));margin-bottom:calc(14 * var(--s));
+}
+.about-txt h3{font-size:max(16px,calc(44 * var(--s)));font-weight:900;line-height:1.75;letter-spacing:.02em}
+.about-body{margin-top:calc(30 * var(--s));background:rgba(0,0,0,.15);padding:calc(30 * var(--s)) calc(34 * var(--s))}
+.about-body p{font-size:max(11px,calc(19 * var(--s)));line-height:2;font-weight:500}
+.about-body p+p{margin-top:1.3em}
+.about-item>img{width:100%;height:calc(490 * var(--s));object-fit:cover}
+
+/* ============ 無料オファー ============ */
+.offer{
+  position:relative;color:#fff;overflow:hidden;text-align:center;min-height:calc(620 * var(--s));
+  background:radial-gradient(120% 90% at 50% 34%,#2b2b2b 0%,#111 56%,#050505 100%);
+  padding:calc(46 * var(--s)) 0 calc(46 * var(--s));
+}
+.offer .script{font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;font-style:italic;letter-spacing:.22em;color:rgba(255,255,255,.75);font-size:max(13px,calc(34 * var(--s)))}
+.offer .tag{
+  display:inline-block;margin-top:calc(22 * var(--s));background:var(--grad-h);color:#fff;font-weight:700;
+  padding:calc(6 * var(--s)) calc(60 * var(--s));font-size:max(12px,calc(28 * var(--s)));letter-spacing:.06em;
+  clip-path:polygon(4% 0,96% 0,100% 50%,96% 100%,4% 100%,0 50%);
+}
+.offer-main{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:min(calc(20 * var(--s)),2.2vw);margin-top:calc(10 * var(--s))}
+.offer-main .laurel{width:min(calc(150 * var(--s)),11.5vw);height:auto;opacity:.97;flex:none}
+.offer-main .laurel.r{transform:scaleX(-1)}
+.offer-main .txt{font-weight:900;line-height:1.15;min-width:0;text-align:center}
+.offer-main .t1{font-size:min(max(14px,calc(48 * var(--s))),4.6vw);white-space:nowrap}
+.offer-main .t2{margin:.05em 0;font-size:min(max(36px,calc(158 * var(--s))),13vw);color:var(--gold);line-height:1;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:baseline;justify-content:center;gap:.12em}
+.offer-main .t2 small{font-size:.42em;color:#fff;white-space:nowrap}
+.offer-main .t3{font-size:min(max(13px,calc(42 * var(--s))),4.1vw);white-space:nowrap}
+.offer .stars{color:var(--gold);letter-spacing:.5em;margin:calc(16 * var(--s)) 0 calc(30 * var(--s));font-size:max(12px,calc(30 * var(--s)))}
+/* 背景：サムネイルの帯が黒背景いっぱいに流れ続ける（行ごとに逆方向）
+   iOS Safari で画像が消える事故を避けるため、行の高さ／画像の height に
+   パーセント指定は一切使わない。画像は「幅を指定 → 高さは16:9から決まる」だけ。
+   行は6本用意し、はみ出した分は overflow で切る＝どの端末でも必ず埋まる。 */
+.offer-thumbs{
+  position:absolute;left:0;right:0;top:calc(-14 * var(--s));bottom:calc(-14 * var(--s));
+  z-index:0;pointer-events:none;overflow:hidden;
+  display:flex;flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;
+  gap:calc(14 * var(--s));contain:paint;
+}
+/* 各画像に余白を持たせる（rowにgapを付けると-50%移動で継ぎ目が半コマずれる） */
+/* will-change / backface-visibility は使わない。
+   iOS Safari では行ごとに巨大な合成レイヤーが作られ、タイル予算を超えて
+   「一部が真っ黒で描画されない」状態になるため、ブラウザ任せにする。 */
+.offer-row{
+  display:flex;flex:1 1 0;min-height:0;width:max-content;align-items:center;
+  animation:offerMarquee 64s linear infinite;
+}
+/* PCは4行だけ表示 */
+.offer-row:nth-child(n+5){display:none}
+.offer-row:nth-child(2){animation-duration:84s;animation-direction:reverse}
+.offer-row:nth-child(3){animation-duration:72s}
+.offer-row:nth-child(4){animation-duration:92s;animation-direction:reverse}
+.offer-row:nth-child(5){animation-duration:78s}
+.offer-row:nth-child(6){animation-duration:88s;animation-direction:reverse}
+.offer-row img{
+  height:100%;width:auto;max-width:none;
+  aspect-ratio:16/9;object-fit:cover;flex:none;display:block;
+  margin-right:calc(14 * var(--s));
+  opacity:.72;filter:saturate(1) contrast(1.04);border-radius:calc(4 * var(--s));
+}
+@keyframes offerMarquee{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+/* 中央の文字を読ませるための暗幕 */
+.offer::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(46% 42% at 50% 47%,rgba(0,0,0,.9) 0%,rgba(0,0,0,.74) 52%,rgba(0,0,0,.24) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 30%,rgba(0,0,0,.1) 70%,rgba(0,0,0,.55) 100%);
+}
+/* サムネイルを明るくした分、文字側に影を足して可読性を確保する */
+.offer .wrap{position:relative;z-index:2;text-shadow:0 calc(2 * var(--s)) calc(16 * var(--s)) rgba(0,0,0,.85),0 0 calc(30 * var(--s)) rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:reduce){
+  .offer-row{animation:none}
+}
+
+/* ============ REASON ============ */
+.reason{
+  background:linear-gradient(165deg,#2b4487 0%,#22346d 45%,#16224a 100%);color:#fff;overflow:hidden;
+  padding:calc(105 * var(--s)) 0 calc(70 * var(--s));
+}
+.reason .sec-head .ghost{color:rgba(255,255,255,.06);font-size:calc(300 * var(--s))}
+.reason-title{display:flex;align-items:center;justify-content:center;gap:calc(30 * var(--s));position:relative;z-index:1}
+.reason-title img{width:calc(150 * var(--s));object-fit:contain}
+.reason-title h2{font-size:max(22px,calc(62 * var(--s)));font-weight:900;letter-spacing:.04em;line-height:1.25;text-align:left}
+/* 濃紺の面に乗るので明るいターコイズにする（濃紺のままだと背景と同色で消える） */
+.reason-title h2 em{display:block;font-style:normal;color:var(--accent-lt);font-size:1.55em;line-height:1.1}
+.reason-list{margin-top:calc(46 * var(--s));display:flex;flex-direction:column;gap:calc(56 * var(--s))}
+.rcard{
+  position:relative;background:#fff;color:var(--dark);
+  width:calc(1600 * var(--s));margin:0 auto;
+  padding:calc(95 * var(--s)) calc(70 * var(--s)) calc(80 * var(--s));
+  clip-path:polygon(0 calc(38 * var(--s)),100% 0,100% calc(100% - 38 * var(--s)),0 100%);
+}
+.rcard.b{clip-path:polygon(0 0,100% calc(38 * var(--s)),100% 100%,0 calc(100% - 38 * var(--s)))}
+.rcard-in{display:grid;grid-template-columns:1.1fr .9fr;gap:calc(50 * var(--s));align-items:center}
+.rcard.b .rcard-in{grid-template-columns:.9fr 1.1fr}
+.rcard .no{position:absolute;right:calc(70 * var(--s));top:calc(30 * var(--s));display:flex;align-items:flex-start;gap:calc(8 * var(--s))}
+.rcard.b .no{top:calc(86 * var(--s))}
+.rcard .no b{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:900;font-size:calc(120 * var(--s));color:var(--red);line-height:1}
+.rcard .no i{writing-mode:vertical-rl;font-family:"Trebuchet MS",Verdana,sans-serif;font-style:normal;font-weight:800;font-size:calc(15 * var(--s));letter-spacing:.2em;color:var(--red);margin-top:.6em}
+.rcard h3{font-size:max(16px,calc(44 * var(--s)));font-weight:900;line-height:1.8}
+.rcard p{margin-top:calc(28 * var(--s));font-size:max(11px,calc(19 * var(--s)));line-height:2;font-weight:500}
+.rcard img{width:100%;height:calc(420 * var(--s));object-fit:cover}
+.rcard .thumbgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:calc(8 * var(--s))}
+.rcard .thumbgrid img{height:auto;aspect-ratio:16/9}
+
+/* ============ REASONの下に置く特別公開動画 ============ */
+/* タイトルを上、サムネイルを下に縦並び */
+.rvideo{width:calc(1420 * var(--s));max-width:94%;margin:calc(46 * var(--s)) auto 0}
+.rvideo-inner{display:block;background:#fff;padding:calc(32 * var(--s));text-align:center;/* タイトルと動画を同じ幅の枠に */
+  }
+.rvideo .rv-col{display:inline-block;max-width:100%;text-align:center;
+  transition:transform .3s ease,box-shadow .3s ease}
+.rvideo-txt{margin-bottom:calc(24 * var(--s))}
+.rvideo-thumb{cursor:pointer}
+.rvideo-btn{cursor:pointer;border:none}
+/* サムネはブロック幅より小さく中央寄せ（タイトルは1行のまま確保） */
+.rvideo-thumb{position:relative;overflow:hidden;background:#111;width:100%;margin:0 auto}
+.rvideo-thumb img,.rvideo-thumb video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.rvideo-thumb.playing .play{display:none}
+.rvideo-thumb.playing ~ .rvideo-btn{display:none}
+.rvideo-thumb iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+/* サムネイルのホバー拡大は無効化 */
+
+.rvideo-thumb .play{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:18%;aspect-ratio:16/11;border-radius:calc(8 * var(--s));background:rgba(34,52,109,.94);
+  display:flex;align-items:center;justify-content:center;transition:transform .3s ease;
+}
+.rvideo a:hover .rvideo-thumb .play{transform:translate(-50%,-50%) scale(1.08)}
+.rvideo-thumb .play svg{width:34%;fill:#fff}
+.rvideo .tag{display:inline-block;background:var(--grad-h);color:#fff;font-weight:700;
+  font-size:max(10px,calc(20 * var(--s)));padding:calc(5 * var(--s)) calc(20 * var(--s));letter-spacing:.06em}
+/* 1行に収まるサイズ上限（幅に応じて縮む） */
+.rvideo-cap{margin-top:calc(16 * var(--s));color:var(--pg-navy);font-weight:900;
+  font-size:min(calc(29 * var(--s)),2vw);line-height:1.5;letter-spacing:.01em;white-space:nowrap}
+.rvideo-cap b{color:var(--pg-blue);font-size:1.1em}
+.rvideo-btn{display:inline-flex;align-items:center;gap:calc(14 * var(--s));margin-top:calc(22 * var(--s));
+  background:var(--grad-h);color:#fff;font-weight:700;font-size:max(11px,calc(24 * var(--s)));
+  padding:calc(14 * var(--s)) calc(46 * var(--s));border-radius:100px}
+.rvideo-btn i{font-style:normal;font-size:.9em}
+
+/* ============ リピート帯 ============ */
+.repeat-band{background:var(--grad-h);color:#fff;text-align:center;height:calc(67 * var(--s));display:flex;align-items:center;justify-content:center;padding:0 4%}
+.repeat-band p{font-size:max(11px,calc(26 * var(--s)));font-weight:700;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.repeat-band .big{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:900;font-size:1.3em;padding:0 .06em}
+.repeat-band .sep{opacity:.55;margin:0 .7em}
+
+/* ============ 中間CTA ============ */
+.cta{position:relative;overflow:hidden;text-align:center;background:#f4f7fb;padding:calc(110 * var(--s)) 0 calc(120 * var(--s))}
+.cta::before,.cta::after{content:"";position:absolute;inset:0;pointer-events:none}
+.cta::before{
+  background:
+    linear-gradient(135deg,#d8e6f4 0 22%,transparent 22.2%) left top/48% 60% no-repeat,
+    linear-gradient(215deg,#cfeef4 0 26%,transparent 26.2%) right top/46% 55% no-repeat;
+  opacity:.9;
+}
+.cta::after{
+  background:
+    linear-gradient(20deg,#dff1f6 0 20%,transparent 20.2%) left bottom/52% 55% no-repeat,
+    linear-gradient(330deg,#e3ebf7 0 18%,transparent 18.2%) right bottom/50% 50% no-repeat;
+  opacity:.85;
+}
+.cta .wrap{position:relative;z-index:1}
+/* aspect-ratioを明示して、画像の読み込み前でも占有領域が確定するようにする */
+/* 実写の切り抜き（縦長）に合わせ、幅ではなく高さで大きさを決める */
+.cta-crew{position:absolute;bottom:0;height:min(calc(520 * var(--s)),34vw);width:auto;z-index:0;pointer-events:none}
+/* 切り抜き画像ごとに縦横比が違うので個別に指定する（読み込み前の場所取り用） */
+.cta-crew.l{left:calc(-30 * var(--s));transform:scaleX(-1);aspect-ratio:554/912}
+.cta-crew.r{right:calc(-30 * var(--s));aspect-ratio:417/972}
+/* スマホはボタンが横幅いっぱいになるので、人物の高さ分だけ下に余白を作って被りを防ぐ */
+@media (max-width:900px){
+  /* スマホは人物画像を出さない（無駄な余白になるため） */
+  .cta-crew{display:none}
+  .cta{padding-bottom:calc(70 * var(--s))}
+}
+.cta .ribbon{font-size:max(14px,calc(34 * var(--s)));font-weight:900;color:var(--red);letter-spacing:.06em}
+.cta .ribbon::before,.cta .ribbon::after{content:"／";display:inline-block;margin:0 .5em}
+.cta .ribbon::before{transform:scaleX(-1)}
+.cta .board{
+  background:#fff;border:calc(3 * var(--s)) solid var(--dark);position:relative;
+  width:calc(1075 * var(--s));margin:calc(26 * var(--s)) auto calc(60 * var(--s));
+  padding:calc(40 * var(--s)) calc(30 * var(--s));
+}
+.cta .board::after{
+  content:"";position:absolute;left:50%;bottom:calc(-24 * var(--s));transform:translateX(-50%);
+  border:calc(13 * var(--s)) solid transparent;border-top-color:var(--dark);
+}
+.cta .board p{font-size:max(19px,calc(62 * var(--s)));font-weight:900;letter-spacing:.03em;line-height:1.3}
+.cta .zoom{display:inline-block;background:#d8f2f6;color:var(--red);font-weight:700;padding:calc(6 * var(--s)) calc(34 * var(--s));border-radius:100px;font-size:max(11px,calc(24 * var(--s)));margin-bottom:calc(30 * var(--s))}
+
+/* ============ CASE ============ */
+.case{background:var(--gray);padding:calc(90 * var(--s)) 0 calc(50 * var(--s))}
+.case .sec-head .ghost{color:rgba(255,255,255,.75)}
+.case .sec-head h2::before,.case .sec-head h2::after{content:"／";color:var(--red);margin:0 .5em;display:inline-block}
+.case .sec-head h2::before{transform:scaleX(-1)}
+/* ＼／付きで文字数が多いため、1行に収まる上限（5.4vw）を掛けている */
+.case .sec-head h2{font-size:min(max(23px,calc(64 * var(--s))),5.4vw);white-space:nowrap}
+.case-grid{
+  width:calc(1500 * var(--s));margin:calc(60 * var(--s)) auto 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:calc(40 * var(--s));
+}
+.case-card{background:#fff;overflow:hidden;box-shadow:0 calc(2 * var(--s)) calc(12 * var(--s)) rgba(0,0,0,.07);display:flex;flex-direction:column}
+.case-card .co{background:var(--grad-h);color:#fff;text-align:center;font-weight:700;font-size:max(11px,calc(26 * var(--s)));height:calc(78 * var(--s));display:flex;align-items:center;justify-content:center;gap:calc(14 * var(--s));white-space:nowrap}
+.case-card .co small{font-size:max(9px,calc(18 * var(--s)));font-weight:700;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);border-radius:100px;padding:calc(3 * var(--s)) calc(14 * var(--s))}
+.case-card .ph{position:relative}
+.case-card .ph img{width:100%;height:calc(300 * var(--s));object-fit:cover;object-position:center 30%}
+/* 顔の位置：頭頂を枠上端から約5%、顎が下のラベル帯に触れない値（PC/スマホ両方で検証済み） */
+.case-card .ph img.p-kb{object-position:center 8%}
+.case-card .ph img.p-kw{object-position:center 9%}
+.case-card .ph img.p-nb{object-position:center 30%}
+.case-card .ph img.p-kk{object-position:76% 16%}
+.case-card .ph img.p-yt{object-position:center 30%}
+.case-card .ph b{
+  position:absolute;left:0;bottom:0;background:rgba(43,43,43,.92);color:#fff;
+  font-size:max(10px,calc(22 * var(--s)));font-weight:700;padding:calc(8 * var(--s)) calc(22 * var(--s));
+}
+.case-body{padding:calc(24 * var(--s)) calc(20 * var(--s)) calc(30 * var(--s));display:flex;flex-direction:column;gap:calc(18 * var(--s));flex:1}
+.case-body .metric{background:#d8f2f6;color:var(--red);font-weight:900;font-size:max(13px,calc(32 * var(--s)));padding:calc(8 * var(--s)) calc(20 * var(--s));align-self:flex-start}
+.case-body p{font-size:max(11px,calc(20 * var(--s)));line-height:1.85}
+
+/* ============ メンバー紹介 ============ */
+.member{background:var(--pink);padding:calc(44 * var(--s)) 0 calc(24 * var(--s))}
+.member .sec-head .ghost{color:#fff;opacity:.85}
+.member-grid{
+  width:calc(1500 * var(--s));margin:calc(60 * var(--s)) auto 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:calc(40 * var(--s));
+}
+.member-card{background:#fff;display:flex;flex-direction:column;box-shadow:0 calc(2 * var(--s)) calc(12 * var(--s)) rgba(34,52,109,.07)}
+.member-card .ph{overflow:hidden}
+.member-card .ph img{width:100%;height:calc(380 * var(--s));object-fit:cover;object-position:center 22%;transition:transform .6s ease}
+.member-card:hover .ph img{transform:scale(1.04)}
+.member-body{padding:calc(28 * var(--s)) calc(30 * var(--s)) calc(32 * var(--s));display:flex;flex-direction:column;flex:1}
+.member-body .en{display:block;font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;font-size:max(9px,calc(17 * var(--s)));color:var(--red);letter-spacing:.14em}
+.member-body .name{font-size:max(15px,calc(36 * var(--s)));font-weight:900;letter-spacing:.04em;margin:calc(6 * var(--s)) 0 0}
+.member-body .role{font-size:max(10px,calc(19 * var(--s)));font-weight:700;color:#777;margin-top:calc(4 * var(--s))}
+.member-body p{font-size:max(10.5px,calc(19 * var(--s)));line-height:1.9;margin:calc(6 * var(--s)) 0 calc(26 * var(--s))}
+.member-btn{
+  margin-top:auto;display:flex;align-items:center;justify-content:center;gap:calc(14 * var(--s));
+  background:var(--grad-h);color:#fff;font-weight:700;font-size:max(11px,calc(22 * var(--s)));
+  padding:calc(16 * var(--s)) 0;border-radius:100px;
+  transition:filter .25s ease,transform .25s ease;
+}
+.member-btn i{width:1.6em;height:1.6em;border-radius:50%;border:1px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;flex:none}
+.member-btn i svg{width:.7em;fill:#fff}
+.member-card:hover .member-btn{filter:saturate(1.15) brightness(.94);transform:translateY(-2px)}
+@media (max-width:900px){
+  .member-grid{width:94%;grid-template-columns:1fr;gap:calc(30 * var(--s))}
+  .member-card .ph img{height:calc(460 * var(--s))}
+}
+
+/* ============ FLOW ============ */
+.flow{padding:calc(160 * var(--s)) 0 calc(150 * var(--s))}
+.flow .sec-head .ghost{color:#f2f2f2}
+.flow-steps{
+  width:calc(1450 * var(--s));margin:calc(120 * var(--s)) auto 0;
+  display:flex;align-items:flex-start;justify-content:space-between;
+}
+.step{width:calc(185 * var(--s));text-align:center}
+.step .ic{
+  width:calc(185 * var(--s));height:calc(185 * var(--s));border-radius:50%;border:1px solid #e6e6e6;
+  display:flex;align-items:center;justify-content:center;margin-bottom:calc(28 * var(--s));background:#fff;
+  transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease;
+}
+.step:hover .ic{border-color:var(--red);transform:translateY(-4px);box-shadow:0 calc(12 * var(--s)) calc(24 * var(--s)) rgba(34,52,109,.14)}
+.step .ic svg{width:44%;stroke:var(--red);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.step span{font-size:max(10px,calc(24 * var(--s)));font-weight:700}
+.flow-arrow{margin-top:calc(78 * var(--s));color:var(--red);font-size:max(10px,calc(26 * var(--s)))}
+
+/* ============ FAQ ============ */
+.faq{background:linear-gradient(rgba(245,245,245,.94),rgba(245,245,245,.94)),url(../img/bg-faq.jpg) center/cover fixed no-repeat,#f5f5f5;padding:calc(20 * var(--s)) 0 calc(70 * var(--s))}
+.faq .sec-head .ghost{color:#ececec}
+.faq-list{width:calc(1584 * var(--s));margin:calc(48 * var(--s)) auto 0;display:flex;flex-direction:column;gap:calc(26 * var(--s))}
+.faq details{background:#fff;box-shadow:0 calc(2 * var(--s)) calc(10 * var(--s)) rgba(0,0,0,.05)}
+.faq summary{
+  list-style:none;cursor:pointer;display:flex;gap:calc(26 * var(--s));align-items:flex-start;
+  padding:calc(28 * var(--s)) calc(40 * var(--s));font-size:max(11px,calc(24 * var(--s)));font-weight:700;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";margin-left:auto;flex:none;width:.55em;height:.55em;border-right:2px solid #bbb;border-bottom:2px solid #bbb;
+  transform:rotate(45deg);transition:transform .3s ease;margin-top:.3em;
+}
+.faq details[open] summary::after{transform:rotate(-135deg)}
+.faq .q{color:var(--red);font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;flex:none}
+.faq .a{
+  display:flex;gap:calc(26 * var(--s));align-items:flex-start;border-top:1px solid #eee;
+  padding:calc(28 * var(--s)) calc(40 * var(--s));font-size:max(10px,calc(21 * var(--s)));line-height:1.95;
+}
+.faq .a .q{color:var(--dark)}
+
+/* ============ CONTACT ============ */
+#contact{scroll-margin-top:calc(30 * var(--s))}
+.contact{padding:calc(130 * var(--s)) 0 calc(40 * var(--s))}
+.contact .head{text-align:center}
+.contact .head .en{color:var(--navy);font-size:max(11px,calc(24 * var(--s)));display:block;margin-bottom:calc(16 * var(--s))}
+.contact .head h2{font-size:max(24px,calc(62 * var(--s)));font-weight:900;letter-spacing:.06em}
+.contact .head .lead{color:var(--navy);font-weight:900;font-size:max(14px,calc(32 * var(--s)));margin-top:calc(50 * var(--s))}
+.contact .head .desc{margin-top:calc(24 * var(--s));font-size:max(11px,calc(19 * var(--s)));line-height:2;color:#555}
+/* 3ステップを1行で見せるため、パネルだけ本文より広く取る */
+.steps{background:#f6f6f6;margin-top:calc(56 * var(--s));padding:calc(44 * var(--s)) calc(30 * var(--s));
+  width:min(96vw,calc(1500 * var(--s)));margin-left:50%;transform:translateX(-50%)}
+.steps h3{text-align:center;color:var(--navy);font-weight:900;font-size:max(13px,calc(28 * var(--s)));margin-bottom:calc(34 * var(--s))}
+.steps ol{list-style:none;display:flex;align-items:center;justify-content:center;gap:calc(20 * var(--s))}
+.steps li{display:flex;align-items:center;gap:calc(14 * var(--s));flex:none}
+.steps li svg{width:calc(56 * var(--s));flex:none;stroke:var(--navy);fill:none;stroke-width:1.4}
+.steps .no{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;font-size:max(8px,calc(15 * var(--s)));color:#8a8a8a;letter-spacing:.1em}
+.steps b{display:block;color:var(--navy);font-size:max(12px,calc(26 * var(--s)));line-height:1.5;white-space:nowrap}
+.steps small{font-size:max(9px,calc(15 * var(--s)));color:#666;line-height:1.6;white-space:nowrap}
+.steps .arw{color:var(--navy);opacity:.6}
+
+form{margin-top:calc(70 * var(--s))}
+.field{
+  display:grid;grid-template-columns:calc(340 * var(--s)) 1fr;gap:calc(34 * var(--s));
+  padding:calc(28 * var(--s)) 0;border-top:1px solid #e8e8e8;align-items:flex-start;
+}
+.field:last-of-type{border-bottom:1px solid #e8e8e8}
+.field>.lb{display:flex;align-items:flex-start;gap:calc(14 * var(--s));font-weight:700;font-size:max(11px,calc(21 * var(--s)));padding-top:.5em;flex-wrap:wrap}
+.req{background:var(--red);color:#fff;font-size:max(8px,calc(15 * var(--s)));font-weight:700;padding:.25em .7em;border-radius:2px;flex:none}
+.opt{background:#9a9a9a;color:#fff;font-size:max(8px,calc(15 * var(--s)));font-weight:700;padding:.25em .7em;border-radius:2px;flex:none}
+.lb small{display:block;width:100%;font-weight:400;color:#888;font-size:.7em;line-height:1.4}
+.ctrl{display:flex;flex-wrap:wrap;gap:calc(14 * var(--s))}
+.ctrl.col{flex-direction:column;align-items:stretch}
+input[type=text],input[type=tel],input[type=email],select,textarea{
+  font-family:inherit;font-size:max(11px,calc(20 * var(--s)));color:var(--dark);
+  border:1px solid #d9d9d9;border-radius:3px;padding:.7em .9em;background:#fff;width:100%;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(34,52,109,.12)}
+input.w-s{max-width:calc(300 * var(--s))}
+input.w-m{max-width:calc(460 * var(--s))}
+select{max-width:calc(320 * var(--s))}
+textarea{min-height:calc(230 * var(--s));resize:vertical}
+.check{
+  display:inline-flex;align-items:center;gap:calc(10 * var(--s));border:1px solid #d9d9d9;border-radius:3px;
+  padding:.55em 1.1em;font-size:max(10px,calc(18 * var(--s)));cursor:pointer;background:#fff;transition:all .2s ease;
+}
+.check:hover{border-color:var(--red)}
+.check input{accent-color:var(--red);width:1.05em;height:1.05em}
+.check.on{border-color:var(--red);background:#eef4fb;font-weight:700}
+.pair{display:flex;gap:calc(14 * var(--s));flex-wrap:wrap;align-items:center}
+.privacy{
+  margin-top:calc(60 * var(--s));border:1px solid #ddd;border-radius:3px;
+  height:calc(220 * var(--s));min-height:130px;overflow-y:auto;padding:calc(30 * var(--s));
+  font-size:max(10px,calc(17 * var(--s)));line-height:1.9;color:#555;background:#fff;
+}
+.privacy h4{text-align:center;font-size:max(11px,calc(20 * var(--s)));margin-bottom:.8em}
+.privacy p+p{margin-top:.8em}
+.agree{display:flex;justify-content:center;margin:calc(36 * var(--s)) 0}
+.submit-wrap{text-align:center;padding-bottom:calc(70 * var(--s))}
+.submit{
+  /* 未入力時のグレーでも白文字が読めるよう、明度を落としている */
+  border:none;border-radius:3px;background:#6e6e6e;color:#fff;cursor:not-allowed;
+  font-size:max(13px,calc(28 * var(--s)));font-weight:700;letter-spacing:.06em;
+  padding:calc(24 * var(--s)) calc(110 * var(--s));transition:all .25s ease;
+}
+.submit.ready{background:var(--grad-h);cursor:pointer;box-shadow:0 calc(10 * var(--s)) calc(24 * var(--s)) rgba(34,52,109,.3)}
+.submit.ready:hover{filter:saturate(1.15) brightness(.94);transform:translateY(-2px)}
+.thanks{
+  display:none;margin:calc(40 * var(--s)) auto 0;width:calc(900 * var(--s));
+  border:2px solid var(--red);background:#eef4fb;padding:calc(34 * var(--s));text-align:center;
+  font-weight:700;font-size:max(12px,calc(22 * var(--s)));line-height:1.9;
+}
+.thanks.show{display:block;animation:pop .4s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+footer{background:#f2f2f2;text-align:center;padding:calc(60 * var(--s)) 0;font-size:max(9px,calc(16 * var(--s)));color:#888}
+footer img{width:calc(200 * var(--s));min-width:110px;margin:0 auto calc(20 * var(--s));opacity:.85}
+
+/* スクロール表示 */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+}
+
+/* ============ スマホ ============ */
+@media (max-width:900px){
+  :root{--s:calc(100vw / 900)}
+  .wrap,.wrap-n{width:92%}
+          .hero-copy{text-shadow:0 calc(6 * var(--s)) calc(24 * var(--s)) rgba(0,0,0,.75)}
+                              /* 1行に収めるため枠を広げ、余白と文字サイズを詰める */
+  /* 画面端まで使って文字を可能な限り大きくする（1行維持の上限＝12.2px相当） */
+  /* テーマ紹介との間の余白を詰める（上余白 150→40） */
+  .trouble{padding-top:calc(40 * var(--s))}
+  /* CTA背景サムネはスマホでは3行 */
+  .offer-row:nth-child(n+4){display:none}
+  /* REASON見出し→カード・カード間の余白を詰める */
+  .reason-list{margin-top:calc(46 * var(--s));gap:calc(56 * var(--s))}
+  .reason{padding-bottom:calc(90 * var(--s))}
+  .trouble-list{width:100vw;max-width:none;margin-left:calc(50% - 50vw);grid-template-columns:1fr;gap:calc(20 * var(--s))}
+  .trouble-list li{padding:calc(18 * var(--s)) calc(12 * var(--s));gap:calc(8 * var(--s));
+    font-size:min(max(10px,calc(46 * var(--s))),4.8vw)}
+  .trouble-list svg{width:1.05em}
+  .wcard{width:94%;padding:0 4% calc(60 * var(--s))}
+  .wcard-head{height:auto;padding-top:calc(60 * var(--s));padding-bottom:calc(40 * var(--s))}
+  .view-more{position:static;margin:calc(24 * var(--s)) auto 0;width:calc(360 * var(--s));height:calc(74 * var(--s));font-size:calc(22 * var(--s))}
+  /* スマホは1行1動画・タイトルは1行（はみ出しは…で省略） */
+  /* 1fr だと nowrap のタイトルの min-content で列が広がるため minmax(0,1fr) にする */
+  .wrow{grid-template-columns:minmax(0,1fr);gap:calc(30 * var(--s))}
+  .wcard-item{min-width:0}
+  /* 1行目の【会社名／テーマ】は1行、2行目のタイトルは2行まで折り返して全部見せる */
+  .wcap{font-size:calc(24 * var(--s));white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;
+    -webkit-line-clamp:3;overflow:hidden}
+  .about-item,.about-item.rev{grid-template-columns:1fr;width:100%;gap:calc(30 * var(--s))}
+  .about-item .about-txt,.about-item.rev .about-txt{padding:0 4%}
+  .about-item.rev .about-txt{order:0}
+  /* 番号は常に右上。ABOUTの表記と上端をそろえ、上に余計な余白を作らない */
+  .about-item .num,.about-item.rev .num{left:auto;right:4%;top:0;font-size:calc(150 * var(--s));line-height:.78}
+  .about-item .about-txt,.about-item.rev .about-txt{padding-right:calc(170 * var(--s))}
+  .about-item>img{height:calc(420 * var(--s))}
+  /* REASONも同じ考え方で、番号の高さ分だけ上を空ける */
+  /* 見出しの上端を番号の上端にそろえる（番号の幅だけ見出しに右余白を確保） */
+  .rcard,.rcard.b{width:94%;clip-path:none;padding:calc(34 * var(--s)) calc(40 * var(--s)) calc(56 * var(--s))}
+  .rcard .no,.rcard.b .no{top:calc(52 * var(--s));right:calc(40 * var(--s))}
+  .rcard h3{padding-right:calc(180 * var(--s));font-size:min(max(15px,calc(44 * var(--s))),4.7vw)}
+  .rcard h3 .hl,.rcard h3 .hl-dark{white-space:nowrap}
+  .rcard-in,.rcard.b .rcard-in{grid-template-columns:1fr}
+  /* 偶数カードも「番号→見出し→本文→画像」の順に見えるようにする */
+  .rcard.b .rcard-in>.thumbgrid{order:2}
+  .rcard.b .rcard-in>div:not(.thumbgrid){order:1}
+  /* 特別公開動画はスマホでは縦積み */
+  .rvideo{width:94%}
+  .rvideo-inner{padding:calc(26 * var(--s))}
+  .rvideo-thumb{width:100%}
+  .rvideo-thumb .play{width:24%}
+  /* スマホは幅が狭いので1行に収まらない。読みやすさを優先して折り返す */
+  .rvideo-cap{font-size:calc(34 * var(--s));margin-top:calc(14 * var(--s));white-space:normal;line-height:1.6}
+  .rvideo-btn{width:100%;justify-content:center;padding:calc(16 * var(--s)) 0;font-size:calc(28 * var(--s))}
+  .repeat-band{height:auto;padding:calc(24 * var(--s)) 4%}
+  .repeat-band p{white-space:normal;line-height:1.7}
+  .cta .board{width:94%}
+  .cta .board p{font-size:min(calc(62 * var(--s)),5.4vw);white-space:nowrap;line-height:1.35}
+  .case-grid{width:94%;grid-template-columns:1fr;gap:calc(26 * var(--s))}
+  /* スマホは会社名＋棟数を大きく */
+  .case-card .co{font-size:calc(40 * var(--s));height:calc(100 * var(--s));gap:calc(16 * var(--s))}
+  .case-card .co small{font-size:calc(27 * var(--s));padding:calc(4 * var(--s)) calc(16 * var(--s))}
+  /* スマホは横長すぎて顔が切れるため、写真枠を4:3にして縦を稼ぐ */
+  .case-card .ph img{height:auto;aspect-ratio:4/3}
+  .flow-steps{width:94%;flex-wrap:wrap;justify-content:center;gap:calc(30 * var(--s))}
+  .step,.step .ic{width:calc(230 * var(--s));height:auto}
+  .step .ic{height:calc(230 * var(--s))}
+  .flow-arrow{display:none}
+  .faq-list{width:94%}
+  .field{grid-template-columns:1fr;gap:calc(12 * var(--s))}
+  /* スマホは縦並び＝横幅に余裕があるので、文字とアイコンを大きくする */
+  .steps{width:96%;margin-left:auto;transform:none;padding:calc(40 * var(--s)) calc(26 * var(--s))}
+  .steps h3{font-size:calc(36 * var(--s));margin-bottom:calc(26 * var(--s))}
+  .steps ol{flex-direction:column;align-items:flex-start;gap:calc(18 * var(--s))}
+  .steps li{gap:calc(22 * var(--s))}
+  .steps li svg{width:calc(84 * var(--s))}
+  .steps .no{font-size:max(10px,calc(23 * var(--s)))}
+  .steps b{font-size:calc(42 * var(--s))}
+  .steps small{font-size:calc(30 * var(--s))}
+  .steps .arw{transform:rotate(90deg);align-self:center;font-size:calc(28 * var(--s))}
+  /* スマホは1枚を大きくして4行で埋める。描画するサムネイル枚数を抑えることで
+     iOS Safari のタイル切れ（一部が真っ黒になる）を防ぐ */
+  .offer-thumbs{gap:calc(12 * var(--s))}
+  .offer-row img{width:58vw;min-width:0;margin-right:calc(12 * var(--s))}
+  .offer-row:nth-child(n+5){display:none}
+  .offer-row{animation-duration:46s}
+  .offer-row:nth-child(2){animation-duration:58s}
+  .offer-row:nth-child(3){animation-duration:52s}
+  .offer-row:nth-child(4){animation-duration:64s}
+  .offer-main{gap:1.6vw}
+  .offer-main .laurel{width:10.5vw}
+  .offer-main .txt{text-align:center}
+  .offer-main .t1{font-size:4.6vw;margin-bottom:.6vw}
+  /* 「成功事例集」5文字が左右の月桂樹に当たらない上限 */
+  .offer-main .t2{font-size:12.6vw;line-height:1}
+  .offer-main .t3{font-size:4.4vw;margin-top:.8vw}
+  .offer .tag{font-size:calc(26 * var(--s))}
+  .offer .script{font-size:calc(30 * var(--s))}
+  .thanks{width:94%}
+}
+
+
+/* ===== スマホ：追従CTAは画面下の固定バーにする（PC用指定より後に置いて確実に上書き） ===== */
+@media (max-width:900px){
+  body{padding-bottom:96px}
+  .hero-float{
+    left:0;right:0;bottom:0;width:100%;max-width:none;padding:9px 12px;
+    border:none;border-top:1px solid rgba(255,255,255,.22);box-shadow:0 -6px 20px rgba(0,0,0,.45);
+  }
+  /* スマホはPCカードを隠して2ボタンを横並び表示 */
+  .hero-float .fb-pc{display:none}
+  .hero-float .fb-wrap{display:flex;flex-direction:row;gap:8px;margin:0}
+  .hero-float .fb{flex:1;font-size:13px;padding:11px 4px;white-space:nowrap}
+  .hero-float .close{top:-12px;right:8px;width:24px;height:24px;font-size:12px}
+  /* 進捗ウィジェットも下部バー化 */
+  .form-progress{left:0;right:0;bottom:0;width:100%;max-width:none;border-radius:0;border:none;
+    border-top:1px solid #cbd3df;padding:8px 14px;box-shadow:0 -6px 20px rgba(0,0,0,.25)}
+  .form-progress .fp-tag{margin-bottom:6px;font-size:11px;padding:3px 12px}
+  .form-progress .fp-txt{font-size:12px}
+  .form-progress .fp-txt b{font-size:20px}
+}
+
+
+/* ===== 右サイド 常設CTA（PC限定・2分割） ===== */
+.side-rail{position:fixed;top:0;right:0;height:100vh;width:82px;z-index:80;display:none;flex-direction:column;box-shadow:-6px 0 26px rgba(0,0,0,.28)}
+.side-rail>a{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;color:#fff;text-decoration:none;overflow:hidden;transition:filter .25s ease}
+.side-rail .sc-en{font-family:"Trebuchet MS",Verdana,sans-serif;font-weight:800;font-size:11px;letter-spacing:.24em;opacity:.85}
+.side-rail .sc-ttl{writing-mode:vertical-rl;font-weight:900;font-size:20px;letter-spacing:.18em;line-height:1.15}
+.side-rail .sc-ar{width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;font-size:11px}
+.side-rail .sc-case{background:linear-gradient(165deg,#00b6c9 0%,#0b8ea6 55%,#167cae 100%)}
+.side-rail .sc-contact{background:linear-gradient(165deg,#2b4487 0%,#22346d 55%,#16224a 100%);border-top:2px solid #f4d786}
+.side-rail>a::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#f4d786,#fff6d8,#f4d786)}
+.side-rail .sc-contact::before{display:none}
+.side-rail>a::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 42%,rgba(255,255,255,.28) 50%,transparent 58%);transform:translateY(-110%);transition:transform .7s ease;pointer-events:none}
+.side-rail>a:hover::after{transform:translateY(110%)}
+.side-rail>a:hover{filter:brightness(1.08)}
+@media (min-width:901px){.side-rail{display:flex}.hero-float{display:none!important}body{padding-right:82px}.form-progress{right:calc(82px + 16px)}}

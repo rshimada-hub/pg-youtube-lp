@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>動画制作事例一覧｜工務店のYouTube制作サービス｜ピュアグロース</title>
+<meta name="description" content="ピュアグロースが企画・撮影・編集・運用を担当している工務店・住宅会社のYouTube動画事例を、集客UP／採用強化／営業密着の3カテゴリでまとめて掲載しています。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --s:min(1px,calc(100vw / 1800));
+  /* PGロゴから実測した配色（#00a3c0→#167cae→#374e93→#22346d） */
+  --pg-cyan:#00a3c0;--pg-blue:#167cae;--pg-mid:#374e93;--pg-navy:#22346d;
+  --grad:linear-gradient(115deg,#00a3c0 0%,#167cae 26%,#374e93 62%,#22346d 100%);
+  --grad-h:linear-gradient(90deg,#00a3c0 0%,#167cae 30%,#374e93 66%,#22346d 100%);
+  --grad-deep:linear-gradient(125deg,#167cae 0%,#374e93 38%,#22346d 74%,#16224a 100%);
+  --red:#22346d;--red-deep:#16224a;--accent:#00a3c0;
+  --dark:#333;--ink:#22283a;--pink:#eaf1f8;--gray:#eef1f5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--dark);background:var(--pink);line-height:1.8;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+.whead{background:var(--grad-deep);color:#fff;text-align:center;padding:calc(70 * var(--s)) 0 calc(80 * var(--s));position:relative;overflow:hidden}
+.whead::before{content:"WORKS";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  font-family:Montserrat,sans-serif;font-weight:900;font-size:calc(300 * var(--s));color:rgba(255,255,255,.14);white-space:nowrap;line-height:1}
+.whead .back{position:relative;display:inline-flex;align-items:center;gap:.6em;font-size:max(11px,calc(20 * var(--s)));font-weight:700;
+  background:rgba(0,0,0,.22);border-radius:100px;padding:.4em 1.4em;margin-bottom:calc(30 * var(--s));transition:background .25s ease}
+.whead .back:hover{background:rgba(0,0,0,.4)}
+.whead h1{position:relative;font-size:max(24px,calc(72 * var(--s)));font-weight:900;letter-spacing:.06em;line-height:1.35}
+.whead p{position:relative;margin-top:calc(24 * var(--s));font-size:max(11px,calc(22 * var(--s)));font-weight:500;line-height:1.9}
+
+.wnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);box-shadow:0 2px 14px rgba(34,52,109,.1);
+  display:flex;justify-content:center;flex-wrap:wrap;gap:calc(14 * var(--s));padding:calc(18 * var(--s)) 4%}
+.wnav a{display:inline-flex;align-items:center;gap:.6em;border:1px solid var(--red);color:var(--red);border-radius:100px;
+  padding:calc(9 * var(--s)) calc(28 * var(--s));font-size:max(11px,calc(20 * var(--s)));font-weight:700;transition:all .25s ease}
+.wnav a span{font-family:Montserrat,sans-serif;font-size:.82em;opacity:.7}
+.wnav a:hover{background:var(--red);color:#fff}
+.wnav a:hover span{opacity:.9}
+
+.wsec{padding:calc(70 * var(--s)) 0 0}
+.wcard{width:calc(1600 * var(--s));margin:0 auto;background:#fff;padding:calc(50 * var(--s)) calc(50 * var(--s)) calc(70 * var(--s))}
+.wcard-head{text-align:center;margin-bottom:calc(20 * var(--s))}
+.wcard-icon{width:calc(90 * var(--s));height:calc(90 * var(--s));border-radius:50%;background:var(--pink);
+  display:flex;align-items:center;justify-content:center;margin:0 auto calc(20 * var(--s))}
+.wcard-icon svg{width:56%;stroke:var(--red);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.wcard-head h3{font-size:max(19px,calc(52 * var(--s)));font-weight:900;letter-spacing:.1em}
+.wcard-head h3 .wsub{font-size:.44em;letter-spacing:.04em;font-weight:700;color:#777;margin-left:.3em}
+.wviews{margin-top:calc(6 * var(--s));font-size:max(9px,calc(16 * var(--s)));color:#7d8899;font-family:Montserrat,"Noto Sans JP",sans-serif}
+.wsec-lead{text-align:center;font-size:max(11px,calc(20 * var(--s)));line-height:1.9;color:#555;margin-bottom:calc(44 * var(--s))}
+.wrow{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(24 * var(--s)) calc(20 * var(--s))}
+.wcard-item{display:block}
+.wthumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111}
+.wthumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+/* サムネイルのホバー拡大は無効化 */
+.wcard-item:hover .wthumb img{transform:none}
+.wthumb .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.85);width:22%;aspect-ratio:16/11;
+  border-radius:calc(8 * var(--s));background:rgba(34,52,109,.94);display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .3s ease,transform .3s ease}
+.wthumb .play svg{width:34%;fill:#fff}
+.wcard-item:hover .wthumb .play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.wthumb .tag{position:absolute;left:0;bottom:0;background:var(--grad-h);color:#fff;font-size:max(9px,calc(17 * var(--s)));
+  font-weight:700;padding:calc(4 * var(--s)) calc(14 * var(--s))}
+.wcap{margin-top:calc(16 * var(--s));font-size:max(10px,calc(18 * var(--s)));line-height:1.6}
+.wcap b{display:block;color:var(--red);font-size:.94em;margin-bottom:.3em}
+
+.wch{width:calc(1600 * var(--s));margin:calc(70 * var(--s)) auto 0;background:#fff;padding:calc(50 * var(--s))}
+.wch h2{text-align:center;font-size:max(17px,calc(44 * var(--s)));font-weight:900;letter-spacing:.06em;margin-bottom:calc(34 * var(--s))}
+.wch .list{display:flex;flex-wrap:wrap;justify-content:center;gap:calc(16 * var(--s))}
+.ch-link{display:inline-flex;align-items:center;gap:calc(14 * var(--s));border:1px solid #dbe6f1;border-radius:100px;
+  padding:calc(12 * var(--s)) calc(28 * var(--s));font-size:max(10px,calc(19 * var(--s)));font-weight:700;transition:all .25s ease}
+.ch-link svg{width:calc(28 * var(--s));min-width:16px;flex:none;fill:var(--red)}
+.ch-link:hover{border-color:var(--red);color:var(--red);transform:translateY(-2px);box-shadow:0 8px 18px rgba(34,52,109,.14)}
+
+.wfoot{text-align:center;padding:calc(70 * var(--s)) 4% calc(90 * var(--s))}
+.wfoot .note{font-size:max(9px,calc(17 * var(--s)));color:#7d8899;line-height:1.9;margin-bottom:calc(40 * var(--s))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:calc(20 * var(--s));background:var(--grad-h);color:#fff;
+  font-weight:700;border-radius:100px;min-height:calc(120 * var(--s));width:calc(900 * var(--s));max-width:94%;
+  font-size:max(14px,calc(36 * var(--s)));box-shadow:0 calc(10 * var(--s)) calc(26 * var(--s)) rgba(34,52,109,.34);
+  transition:transform .25s ease,filter .25s ease}
+.btn:hover{transform:translateY(-3px);filter:saturate(1.15) brightness(.94)}
+.btn .arw{width:calc(50 * var(--s));height:calc(50 * var(--s));min-width:22px;min-height:22px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;flex:none}
+.btn .arw svg{width:45%;fill:#fff}
+
+@media (max-width:900px){
+  :root{--s:calc(100vw / 900)}
+  .wcard,.wch{width:94%;padding:calc(40 * var(--s)) 4% calc(60 * var(--s))}
+  /* スマホは1行1動画・タイトルは1行 */
+  .wrow{grid-template-columns:minmax(0,1fr);gap:calc(34 * var(--s))}
+  .wcard-item{min-width:0}
+  .wcap{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wcap b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wnav{gap:calc(12 * var(--s));padding:calc(20 * var(--s)) 3%}
+}
+</style>
+</head>
+<body>
+
+<header class="whead">
+  <a class="back" href="index.html">← サービストップに戻る</a>
+  <h1>動画制作事例</h1>
+  <p>ピュアグロースが企画・撮影・編集・運用を担当している<br>
+  工務店・住宅会社様の好事例20本を、目的別にご紹介します。</p>
+</header>
+
+<nav class="wnav">
+      <a href="#hanbai">①販売強化<span>10本</span></a>
+      <a href="#saiyo">②採用強化<span>10本</span></a>
+</nav>
+
+  <section class="wsec" id="hanbai">
+    <div class="wcard">
+      <div class="wcard-head">
+        <div class="wcard-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <h3>① 販売強化<span class="wsub">（集客・契約率）</span></h3>
+      </div>
+      <p class="wsec-lead">ルームツアー・性能解説・オーナーの声で、来場前の情報収集を自社チャンネルの中で完結させる企画群です。動画を見てからご来場いただくことで、初回接客の質と契約率が変わります。</p>
+      <div class="wrow">
+        <a class="wcard-item" href="https://youtu.be/ZUQnwvF-oWA" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/ZUQnwvF-oWA.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">ルームツアー</span></div>
+          <p class="wcap"><b>アレス様</b>【平屋ルームツアー】22坪とは思えない開放感。おしゃれ・性能・コスパを全部叶えたリアルサイズ住宅</p>
+          <p class="wviews">再生回数 4,599回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/eKiPXKBdZ7s" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/eKiPXKBdZ7s.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">ルームツアー</span></div>
+          <p class="wcap"><b>EXCEED GROUP様</b>【ルームツアー】24坪とは思えない平屋ガレージハウス</p>
+          <p class="wviews">再生回数 4,383回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/NE1aCiTyG7U" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/NE1aCiTyG7U.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">ルームツアー</span></div>
+          <p class="wcap"><b>ライフデザイン・カバヤ様</b>【ルームツアー】大人のための邸宅リゾートを大公開！CLTハイブリッド構法で実現する大空間とは？</p>
+          <p class="wviews">再生回数 3,744回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/60RAlRoSGFc" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/60RAlRoSGFc.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">比較・お役立ち</span></div>
+          <p class="wcap"><b>プライムハウス様</b>【警告】「借りられる額」で家を建てるな！住宅ローンで破綻しないための計算方法</p>
+          <p class="wviews">再生回数 2,514回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/pd5O7wkJxxg" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/pd5O7wkJxxg.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">ルームツアー</span></div>
+          <p class="wcap"><b>アレス様</b>RoomTour『松山市生石　黒モデルハウス』</p>
+          <p class="wviews">再生回数 1,473回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/f40ep_zpSQM" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/f40ep_zpSQM.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">ルームツアー</span></div>
+          <p class="wcap"><b>アレス様</b>RoomTour『松山市生石　白モデルハウス』</p>
+          <p class="wviews">再生回数 1,401回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/NmkG3WrRkms" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/NmkG3WrRkms.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">ルームツアー</span></div>
+          <p class="wcap"><b>EXCEED GROUP様</b>【ルームツアー】ガレージハウス付き30坪とは思えない開放感のある家</p>
+          <p class="wviews">再生回数 749回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/SLVGaHtoztc" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/SLVGaHtoztc.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">オーナーの声</span></div>
+          <p class="wcap"><b>アレス様</b>【リアル評判】アレスホームで家を建てた家族に本音を聞いてみた</p>
+          <p class="wviews">再生回数 368回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/TpRP-VSf0uw" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/TpRP-VSf0uw.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">比較・お役立ち</span></div>
+          <p class="wcap"><b>アレス様</b>工務店とハウスメーカーどっちが合う？費用・自由度・安心感を徹底比較してみた</p>
+          <p class="wviews">再生回数 293回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/H-d5ezT5K1c" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/H-d5ezT5K1c.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">オーナーの声</span></div>
+          <p class="wcap"><b>プライムハウス様</b>【施主様インタビュー】友人に自信を持って勧められる「リアルな家づくり」の決め手とは</p>
+          <p class="wviews">再生回数 190回</p>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="wsec" id="saiyo">
+    <div class="wcard">
+      <div class="wcard-head">
+        <div class="wcard-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>② 採用強化<span class="wsub">（応募・内定承諾）</span></h3>
+      </div>
+      <p class="wsec-lead">社員の本音・社長の考え・社内の空気を先出しし、応募段階から自社に合う人材を集める企画群です。入社後の姿が伝わることで、内定承諾率と定着率が変わります。</p>
+      <div class="wrow">
+        <a class="wcard-item" href="https://youtu.be/dzcDsUXBI14" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/dzcDsUXBI14.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">社員インタビュー</span></div>
+          <p class="wcap"><b>ヤマト住建様</b>【出身者必見！】一条工務店出身者が語る、同じ業界に転職して良かったこと</p>
+          <p class="wviews">再生回数 8,523回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/0_UJyfu8Bzs" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/0_UJyfu8Bzs.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">代表が語る</span></div>
+          <p class="wcap"><b>カワムラホーム様</b>【転職・就活必見】福岡で挑戦するなら｜カワムラホーム出店の想い</p>
+          <p class="wviews">再生回数 3,309回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/3jOoyLUw-P4" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/3jOoyLUw-P4.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">社員が語る</span></div>
+          <p class="wcap"><b>国分ハウジング様</b>【プロフェッショナルが語る】国分ハウジングがエリアNo.1になる理由とは？</p>
+          <p class="wviews">再生回数 2,860回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/xjcvKeC-TBs" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/xjcvKeC-TBs.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">職場のリアル</span></div>
+          <p class="wcap"><b>プライムハウス様</b>すき焼きにラーメン！？秋田県No.1社員食堂に潜入してみた</p>
+          <p class="wviews">再生回数 2,002回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/VNe-xYMw3rI" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/VNe-xYMw3rI.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">座談会</span></div>
+          <p class="wcap"><b>国分ハウジング様</b>【店舗座談会】薩摩川内店の教育方針や社内の雰囲気についてぶっちゃけます</p>
+          <p class="wviews">再生回数 1,824回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/GoKrzgLTpOY" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/GoKrzgLTpOY.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">職場のリアル</span></div>
+          <p class="wcap"><b>プライムハウス様</b>【隠し撮り】各所にカメラを仕掛けたら社員の個性が大爆発していました</p>
+          <p class="wviews">再生回数 984回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/j1yWEb0Yntc" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/j1yWEb0Yntc.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">1日密着</span></div>
+          <p class="wcap"><b>アレス様</b>【1日密着】売り込まないのに売れる。紹介No.1店長の商談準備が想像以上だった…</p>
+          <p class="wviews">再生回数 728回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/27rnYxUgbJE" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/27rnYxUgbJE.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">1日密着</span></div>
+          <p class="wcap"><b>グリーンランド様</b>【1日密着】グリーンランドのトップセールスの1日を大公開！</p>
+          <p class="wviews">再生回数 447回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/xtrgaIoNl_4" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/xtrgaIoNl_4.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">代表が語る</span></div>
+          <p class="wcap"><b>ナンバホーム様</b>ナンバホームってどんな会社？代表が詳しくお話しします！</p>
+          <p class="wviews">再生回数 314回</p>
+        </a>
+        <a class="wcard-item" href="https://youtu.be/qDa2yPMakdA" target="_blank" rel="noopener">
+          <div class="wthumb"><img src="img/thumbs/qDa2yPMakdA.jpg" alt="" loading="lazy"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="tag">1日密着</span></div>
+          <p class="wcap"><b>永井建設様</b>【一日密着】永井建設の営業部チーフの1日に密着！知られざる営業部の業務とは？</p>
+          <p class="wviews">再生回数 100回</p>
+        </a>
+      </div>
+    </div>
+  </section>
+<section class="wch">
+  <h2>掲載チャンネル一覧</h2>
+  <div class="list">
+      <a class="ch-link" href="https://www.youtube.com/channel/UCduoeOi1okEHipZgdbMyEJA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>アレスホーム 家づくりチャンネル</a>
+      <a class="ch-link" href="https://www.youtube.com/@alles-home" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>アレスホーム 採用チャンネル</a>
+      <a class="ch-link" href="https://www.youtube.com/@%E3%81%A8%E3%81%8C%E7%A4%BE%E9%95%B7%E3%81%AE%E3%82%AC%E3%83%AC%E3%83%BC%E3%82%B8%E3%83%8F%E3%82%A6%E3%82%B9ch" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>とが社長のガレージハウスch【EXCEED GROUP様】</a>
+      <a class="ch-link" href="https://www.youtube.com/@GRANDNESTA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>CLT最強木造チャンネル【ライフデザイン・カバヤ様】</a>
+      <a class="ch-link" href="https://www.youtube.com/@%E3%82%A2%E3%83%AB%E3%83%97%E3%82%B9%E3%83%94%E3%82%A2%E3%83%9B%E3%83%BC%E3%83%A0%E5%85%AC%E5%BC%8F%E3%83%81%E3%83%A3%E3%83%B3%E3%83%8D%E3%83%AB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>アルプスピアホーム 採用チャンネル</a>
+      <a class="ch-link" href="https://www.youtube.com/@akita.genkitv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>プライムハウス／秋田を元気にする会社TV</a>
+      <a class="ch-link" href="https://www.youtube.com/@khg-recruit" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.9-.5-5.8c-.3-1-1.1-1.8-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5c-1 .3-1.8 1.1-2.1 2.1C1 8.1 1 12 1 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8zM9.8 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>国分ハウジング 採用チャンネル</a>
+  </div>
+</section>
+
+<div class="wfoot">
+  <p class="note">※掲載チャンネルは実際に弊社が制作・運用支援を行っている会員・支援先様のチャンネルです。<br>
+  掲載にあたっては各社様の許諾を確認のうえ公開いたします。</p>
+  <a class="btn" href="index.html#contact">無料オンライン相談を申し込む<span class="arw"><svg viewBox="0 0 24 24"><path d="M12 16l-6-6h12z"/></svg></span></a>
+</div>
+
+</body>
+</html>
