@@ -95,9 +95,9 @@ form.addEventListener("change", validate);
 form.addEventListener("submit", function(e){
   e.preventDefault();
   if(!validate()) return;
-  document.getElementById("thanks").classList.add("show");
-  submit.disabled = true; submit.classList.remove("ready"); submit.textContent = "送信済み";
-  document.getElementById("thanks").scrollIntoView({block:"center"});
+  submit.disabled = true; submit.classList.remove("ready"); submit.textContent = "送信中…";
+  // 送信後はサンクスページへ遷移（実運用ではフォーム側の完了リダイレクト先を thanks.html に設定）
+  window.location.href = "thanks.html";
 });
 validate();
 

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>資料ダウンロード申し込み完了｜ピュアグロース株式会社</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root{
+      --navy:#123770;
+      --navy-deep:#0d2a54;
+      --turquoise:#00b6c9;
+      --ink:#333;
+      --gray:#666;
+      --line:#e3e6ee;
+      --lav:#eef1f8;
+      --lav2:#e2e7f4;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;color:var(--ink);background:#fff;
+      font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      display:flex;flex-direction:column;min-height:100vh;
+    }
+    a{color:inherit}
+
+    /* ヘッダー */
+    .site-head{
+      display:flex;align-items:center;
+      padding:18px clamp(16px,5vw,56px);
+      border-bottom:1px solid var(--line);
+    }
+    .site-head img{height:46px;width:auto;display:block}
+
+    /* バナー */
+    .dl-hero{
+      position:relative;overflow:hidden;
+      background:linear-gradient(105deg,var(--lav) 0%,var(--lav) 55%,var(--lav2) 100%);
+    }
+    .dl-hero-inner{
+      position:relative;z-index:2;
+      max-width:1120px;margin:0 auto;
+      padding:clamp(40px,7vw,86px) clamp(16px,5vw,56px);
+    }
+    .eyebrow{
+      margin:0 0 10px;color:var(--turquoise);
+      font-family:"Trebuchet MS",Verdana,sans-serif;
+      font-weight:700;font-size:clamp(15px,2.4vw,22px);letter-spacing:.06em;
+    }
+    .dl-hero h1{
+      margin:0;color:var(--navy);font-weight:900;line-height:1.28;
+      font-size:clamp(26px,5.2vw,46px);letter-spacing:.02em;
+    }
+    /* 右側の写真（青トーン・左へフェード） */
+    .dl-hero-photo{
+      position:absolute;top:0;right:0;bottom:0;width:42%;z-index:1;
+      background:url(img/bg-about.jpg) center/cover no-repeat;
+    }
+    .dl-hero-photo::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(90deg,var(--lav) 0%,rgba(238,241,248,.72) 22%,rgba(0,86,140,.28) 55%,rgba(0,86,140,.34) 100%),
+        linear-gradient(0deg,rgba(18,55,112,.18),rgba(18,55,112,.18));
+      mix-blend-mode:normal;
+    }
+
+    /* 本文 */
+    .dl-body{
+      flex:1;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      padding:clamp(48px,9vw,96px) 24px;
+    }
+    .dl-body p{
+      margin:0;color:var(--gray);line-height:2;
+      font-size:clamp(15px,2.2vw,19px);
+    }
+    .home-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      margin-top:clamp(28px,5vw,44px);
+      padding:14px 34px;border-radius:100px;
+      background:var(--navy);color:#fff;text-decoration:none;font-weight:700;
+      font-size:15px;letter-spacing:.02em;
+      transition:transform .2s ease,background .2s ease;
+    }
+    .home-btn:hover{background:var(--navy-deep);transform:translateY(-2px)}
+    .home-btn i{font-style:normal;font-size:.8em}
+
+    /* パンくず */
+    .crumb{
+      background:#f4f6fb;color:var(--gray);
+      padding:16px clamp(16px,5vw,56px);font-size:13px;
+    }
+    .crumb a{color:var(--gray);text-decoration:none}
+    .crumb a:hover{color:var(--navy);text-decoration:underline}
+    .crumb span{margin:0 .5em;color:#b9c0d0}
+
+    @media (max-width:640px){
+      .dl-hero-photo{width:34%;opacity:.9}
+      .site-head img{height:38px}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-head">
+    <a href="index.html"><img src="img/pg-logo.png" alt="ピュアグロース株式会社"></a>
+  </header>
+
+  <section class="dl-hero">
+    <div class="dl-hero-photo" aria-hidden="true"></div>
+    <div class="dl-hero-inner">
+      <p class="eyebrow">Download</p>
+      <h1>資料ダウンロード申し込み完了</h1>
+    </div>
+  </section>
+
+  <main class="dl-body">
+    <p>
+      お申し込みありがとうございます。<br>
+      ご登録いただいたメールアドレスに、成功事例集のダウンロードリンクをお送りしています。<br>
+      無料相談をお申し込みの方には、担当者より2営業日以内にご連絡いたします。
+    </p>
+    <a class="home-btn" href="index.html">トップページへ戻る <i>▶</i></a>
+  </main>
+
+  <footer class="crumb">
+    <a href="index.html">工務店のYouTube制作サービス TOP</a><span>&gt;</span>資料ダウンロード申し込み完了
+  </footer>
+
+</body>
+</html>
