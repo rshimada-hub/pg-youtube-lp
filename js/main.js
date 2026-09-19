@@ -95,9 +95,9 @@ form.addEventListener("change", validate);
 form.addEventListener("submit", function(e){
   e.preventDefault();
   if(!validate()) return;
-  submit.disabled = true; submit.classList.remove("ready"); submit.textContent = "送信中…";
-  // 送信後はサンクスページへ遷移（本番運用では MW WP Form 側で下記URLへの完了リダイレクトと自動返信メールを設定する）
-  window.location.href = "https://pure-growth.co.jp/download-thanks/?download_post_id=11687&mw_name";
+  document.getElementById("thanks").classList.add("show");
+  submit.disabled = true; submit.classList.remove("ready"); submit.textContent = "送信済み";
+  document.getElementById("thanks").scrollIntoView({block:"center"});
 });
 validate();
 
