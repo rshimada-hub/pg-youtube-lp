@@ -72,7 +72,9 @@ python -m http.server 8000
 - **完了画面**：`https://pure-growth.co.jp/download-thanks/?download_post_id=11687&mw_name` へ遷移
 
 組み込み時は、`#contact` の `<form id="pgform">` を MW WP Form のショートコードに差し替え、
-`js/main.js` の送信ハンドラ（`window.location.href` の行）は削除してください。
+`js/main.js` の送信ハンドラ（`form.addEventListener("submit", …)` の中でデモ用の完了表示をしている箇所）は削除してください。
+※このLPの「成功事例集を取得」も「無料相談」も、すべてこの `#contact` フォームに集約しています。
+　資料（YouTubeノウハウ資料）は、MW WP Form の自動返信メールで既存の `/download/youtube/` と同じものを配布します。
 ※詳細な設定値・メール文面は社内管理ドキュメント（非公開）に記載。
 
 ## 制作
