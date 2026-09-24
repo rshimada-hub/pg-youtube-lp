@@ -1,4 +1,4 @@
-// 都道府県セレクト
+// 都道府県セレクト（存在する場合のみ）
 var PREF = "北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県".split(" ");
 document.querySelectorAll("select.pref").forEach(function(sel){
   PREF.forEach(function(p){
@@ -59,96 +59,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   });
 });
 
-// フォーム
-var form = document.getElementById("pgform");
-var submit = document.getElementById("submit");
-var agree = document.getElementById("agree");
-function groupChecked(name){ return form.querySelectorAll('input[data-group="'+name+'"]:checked').length > 0; }
-function validate(){
-  var ok = true;
-  form.querySelectorAll("input[required], select[required]").forEach(function(el){
-    if(!el.value.trim()) ok = false;
-    if(el.type === "email" && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) ok = false;
-  });
-  if(!groupChecked("soudan")) ok = false;
-  if(!groupChecked("kikkake")) ok = false;
-  if(!agree.checked) ok = false;
-  submit.disabled = !ok;
-  submit.classList.toggle("ready", ok);
-  submit.textContent = ok ? "無料相談を申し込む" : "必須未入力";
-  return ok;
-}
-document.querySelectorAll(".check input").forEach(function(cb){
-  cb.addEventListener("change", function(){
-    if(cb.type === "radio"){
-      document.querySelectorAll('input[name="' + cb.name + '"]').forEach(function(r){
-        r.closest(".check").classList.toggle("on", r.checked);
-      });
-    } else {
-      cb.closest(".check").classList.toggle("on", cb.checked);
-    }
-    validate();
-  });
-});
-form.addEventListener("input", validate);
-form.addEventListener("change", validate);
-form.addEventListener("submit", function(e){
-  e.preventDefault();
-  if(!validate()) return;
-  document.getElementById("thanks").classList.add("show");
-  submit.disabled = true; submit.classList.remove("ready"); submit.textContent = "送信済み";
-  document.getElementById("thanks").scrollIntoView({block:"center"});
-});
-validate();
-
 // FV右下バナーを閉じる
 var fc = document.getElementById("floatClose");
 if(fc){ fc.addEventListener("click", function(){ document.getElementById("heroFloat").classList.add("hide"); }); }
-
-// フローティングバナーの2ボタン→フォームの該当項目にチェック
-document.querySelectorAll(".hero-float .fb").forEach(function(btn){
-  btn.addEventListener("click", function(){
-    var id = btn.getAttribute("data-opt") === "jirei" ? "optJirei" : "optSoudan";
-    var cb = document.getElementById(id);
-    if(cb && !cb.checked){ cb.checked = true; cb.dispatchEvent(new Event("change", {bubbles:true})); }
-  });
-});
-document.querySelectorAll(".side-rail a").forEach(function(a){
-  a.addEventListener("click", function(){
-    var id = a.classList.contains("sc-case") ? "optJirei" : "optSoudan";
-    var cb = document.getElementById(id);
-    if(cb && !cb.checked){ cb.checked = true; cb.dispatchEvent(new Event("change", {bubbles:true})); }
-  });
-});
-
-// 進捗ウィジェット：必須項目の残り数を数える
-var fpEl = document.getElementById("formProgress");
-var fpCount = document.getElementById("fpCount");
-var fpFill = document.getElementById("fpFill");
-function requiredRemaining(){
-  var total = 0, done = 0;
-  form.querySelectorAll("input[required], select[required]").forEach(function(el){
-    total++;
-    var ok = !!el.value.trim();
-    if(el.type === "email" && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) ok = false;
-    if(ok) done++;
-  });
-  total++; if(groupChecked("soudan")) done++;      // ご希望
-  total++; if(groupChecked("kikkake")) done++;      // きっかけ
-  total++; if(agree.checked) done++;                // 同意
-  return {total:total, remaining: total - done};
-}
-function updateProgress(){
-  if(!fpEl) return;
-  var r = requiredRemaining();
-  fpCount.textContent = r.remaining;
-  var pct = r.total ? Math.round((r.total - r.remaining) / r.total * 100) : 0;
-  fpFill.style.width = pct + "%";
-  fpEl.classList.toggle("done", r.remaining === 0);
-}
-form.addEventListener("input", updateProgress);
-form.addEventListener("change", updateProgress);
-updateProgress();
 
 // 平松動画：クリックでLP内インライン再生（native video）。サムネイルはposterとして表示。
 (function(){
@@ -167,15 +80,29 @@ updateProgress();
   if(btn){ btn.addEventListener("click", play); }
 })();
 
-// フォームが画面に映っている間だけ進捗を表示し、それ以外はフローティングバナーを表示
+// 申込フォームが画面に映っている間はフローティングバナーを控えめにする
 var contactSec = document.getElementById("contact");
 var heroFloatEl = document.getElementById("heroFloat");
-if(contactSec && fpEl && "IntersectionObserver" in window){
+if(contactSec && heroFloatEl && "IntersectionObserver" in window){
   var io2 = new IntersectionObserver(function(entries){
-    var visible = entries[0].isIntersecting;
-    fpEl.classList.toggle("show", visible);
-    heroFloatEl.classList.toggle("form-mode", visible);
-    if(visible) updateProgress();
+    heroFloatEl.classList.toggle("form-mode", entries[0].isIntersecting);
   }, {threshold:0.12});
   io2.observe(contactSec);
 }
+
+// 埋め込みフォーム(iframe)の高さ自動調整。
+// 同一オリジン（本番HP＝pure-growth.co.jp配下）に設置された場合は中身の高さにフィットさせる。
+// 別オリジン（GitHub Pages等でのプレビュー）ではCSSのmin-heightで表示する。
+(function(){
+  var f = document.getElementById("pgFormFrame");
+  if(!f) return;
+  function resize(){
+    try {
+      var d = f.contentWindow.document;
+      var h = Math.max(d.body.scrollHeight, d.documentElement.scrollHeight);
+      if(h && h > 200){ f.style.height = h + "px"; }
+    } catch(e){ /* クロスオリジン時はmin-heightのまま */ }
+  }
+  f.addEventListener("load", function(){ resize(); [400,1000,2000].forEach(function(ms){ setTimeout(resize, ms); }); });
+  window.addEventListener("resize", resize);
+})();

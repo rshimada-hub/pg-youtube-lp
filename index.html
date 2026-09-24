@@ -413,83 +413,10 @@
     </div>
 
 
-    <form id="pgform" novalidate>
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>ご希望<small>※どちらか、または両方</small></span>
-        <div class="ctrl">
-          <label class="check"><input type="checkbox" data-group="soudan" value="成功事例集取得" id="optJirei">成功事例集取得</label>
-          <label class="check"><input type="checkbox" data-group="soudan" value="無料相談" id="optSoudan">無料相談</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>企業名</span>
-        <div class="ctrl"><input type="text" name="company" placeholder="例）サンプル工務店株式会社" required></div>
-      </div>
-
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>お名前</span>
-        <div class="ctrl"><input type="text" name="name" class="w-m" placeholder="例）サンプル 太郎" required></div>
-      </div>
-
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>役職名</span>
-        <div class="ctrl">
-          <select name="position" required>
-            <option value="">選択してください</option>
-            <option value="経営者">経営者</option>
-            <option value="役員、経営幹部">役員、経営幹部</option>
-            <option value="部長・課長クラス">部長・課長クラス</option>
-            <option value="一般">一般</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>携帯番号</span>
-        <div class="ctrl"><input type="tel" name="tel" class="w-m" placeholder="例）09012345678" required></div>
-      </div>
-
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>メールアドレス</span>
-        <div class="ctrl"><input type="email" name="email" class="w-m" placeholder="例）contact@example.com" required></div>
-      </div>
-
-      <div class="field">
-        <span class="lb"><span class="req">必須</span>当社を知ったきっかけ</span>
-        <div class="ctrl">
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="検索エンジンから">検索エンジンから</label>
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="Facebook・Instagram">Facebook・Instagram</label>
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="YouTube（ハウスメーカー・工務店コンサルTV）">YouTube（ハウスメーカー・工務店コンサルTV）</label>
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="当社社員からの紹介">当社社員からの紹介</label>
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="経営者仲間からの紹介">経営者仲間からの紹介</label>
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="メルマガ">メルマガ</label>
-          <label class="check"><input type="radio" name="kikkake" data-group="kikkake" value="その他">その他</label>
-        </div>
-      </div>
-
-      <div class="privacy">
-        <h4>― プライバシーポリシー ―</h4>
-        <p>ピュアグロース株式会社（以下、「当社」といいます。）は、当ウェブサイトで提供するサービスにおける、お客様の個人情報の取扱いについて、以下のとおりプライバシーポリシーを定めます。</p>
-        <p>【個人情報の利用目的】当社は、お預かりした個人情報を、お問い合わせへの回答、資料の送付、無料オンライン相談のご案内、当社サービスのご案内、ならびにこれらに付随する業務のために利用いたします。</p>
-        <p>【第三者提供】当社は、法令に基づく場合を除き、あらかじめお客様の同意を得ることなく、個人情報を第三者に提供いたしません。</p>
-        <p>【個人情報の管理】当社は、個人情報への不正アクセス、紛失、破壊、改ざん及び漏洩などを防止するため、必要かつ適切な安全管理措置を講じます。</p>
-        <p>【開示・訂正・削除】お客様ご本人から個人情報の開示、訂正、削除のお申し出があった場合には、速やかに対応いたします。</p>
-      </div>
-
-      <div class="agree">
-        <label class="check"><input type="checkbox" id="agree">上記プライバシーポリシーに同意して</label>
-      </div>
-
-      <div class="submit-wrap">
-        <button type="submit" class="submit" id="submit" disabled>必須未入力</button>
-        <div class="thanks" id="thanks">
-          お問い合わせありがとうございます。<br>
-          担当者より2営業日以内にご連絡いたします。<br>
-          <small style="font-weight:400">※本ページはデザイン確認用のため、実際には送信されていません。</small>
-        </div>
-      </div>
-    </form>
+    <div class="form-embed">
+      <iframe id="pgFormFrame" src="https://pure-growth.co.jp/koumuten-youtube-form/" title="資料ダウンロード・お問い合わせフォーム" loading="lazy" scrolling="no" style="width:100%;border:0;min-height:960px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(18,55,112,.08)"></iframe>
+      <p class="form-embed__note" style="text-align:center;font-size:13px;color:#5b6b82;margin-top:12px">※フォームが表示されない場合は <a href="https://pure-growth.co.jp/koumuten-youtube-form/" target="_blank" rel="noopener" style="color:#00b6c9">こちらのページ</a> からお申し込みください。</p>
+    </div>
   </div>
 </section>
 <footer>
