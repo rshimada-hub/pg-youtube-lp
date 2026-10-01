@@ -117,10 +117,9 @@ section[id]{scroll-margin-top:calc(24 * var(--s))}
 .hero-banner .t3{color:#fff;font-size:max(9px,calc(17 * var(--s)))}
 
 .hero-top,.hero-main,.hero-nav{position:relative;z-index:2}
-/* 左=キャッチ／右=メダル。同じgridに置くので構造的に重ならない */
 .hero-main{
-  display:grid;grid-template-columns:minmax(0,1fr) max-content;align-items:start;
-  column-gap:clamp(12px,calc(30 * var(--s)),30px);row-gap:calc(24 * var(--s));padding:calc(54 * var(--s)) calc(42 * var(--s)) 0 calc(45 * var(--s));
+  display:grid;grid-template-columns:minmax(0,1fr);align-items:start;
+  row-gap:calc(24 * var(--s));padding:calc(54 * var(--s)) calc(42 * var(--s)) 0 calc(45 * var(--s));
 }
 .hero-left{min-width:0;max-width:100%}
 .hero-copy{min-width:0;max-width:100%;font-weight:900;line-height:1.1;letter-spacing:.02em}
@@ -129,23 +128,24 @@ section[id]{scroll-margin-top:calc(24 * var(--s))}
   margin-top:calc(28 * var(--s));color:#fff;font-weight:700;
   font-size:max(11px,calc(28 * var(--s)));letter-spacing:.05em;
 }
-.hero-right{min-width:max-content;display:flex;flex-direction:column;align-items:flex-end;flex:none;margin-top:calc(300 * var(--s))}
-.medals{display:flex;gap:calc(16 * var(--s));flex:none}
-.medals-note{margin-top:calc(14 * var(--s));color:rgba(255,255,255,.8);font-size:max(8px,calc(15 * var(--s)))}
+/* 成功事例集バナーはスマホFV専用（PCは右の常設レールがCTAを担う） */
+.hero-case{display:none}
 
 /* キャッチ（2行組み） */
 
-/* 1行目「工務店のYouTube制作なら」／2行目「ピュアグロース」 */
-.hero-copy .l1{
-  display:flex;align-items:center;flex-wrap:nowrap;white-space:nowrap;gap:.14em;color:#fff;
-  font-size:clamp(24px,calc(74 * var(--s)),74px);
+/* 参考サイトの文字組み：1行目「工務店＋の」／2行目「YouTube制作（赤ベタ）＋なら」／3行目 社名 */
+.hero-copy{--fv-y:#f5cb5c;--fv-r:linear-gradient(90deg,#179ab4 0%,#233369 100%)}
+.hero-copy span{
+  display:block;white-space:nowrap;letter-spacing:.03em;
   text-shadow:0 calc(6 * var(--s)) calc(20 * var(--s)) rgba(0,0,0,.5);
 }
-.hero-copy .l1 small{font-size:.72em;color:#fff}
-.hero-copy .box{background:var(--red);color:#fff;font-size:1em;padding:.06em .16em;line-height:1.15}
-.hero-copy .l2{display:block;margin-top:calc(14 * var(--s));white-space:nowrap}
-.hero-copy .l2 b{color:var(--gold-y);font-size:clamp(34px,calc(120 * var(--s)),120px);line-height:1;
-  text-shadow:0 calc(6 * var(--s)) calc(20 * var(--s)) rgba(0,0,0,.5)}
+.hero-copy small{display:inline;color:#fff;letter-spacing:0}
+.hero-copy .l1{color:var(--fv-y);font-size:clamp(28px,calc(132 * var(--s)),132px);line-height:1.18}
+.hero-copy .l1 small{font-size:.56em;margin-left:.18em}
+.hero-copy .l2{font-size:clamp(26px,calc(116 * var(--s)),116px);line-height:1.3;margin-top:.2em}
+.hero-copy .l2 small{font-size:.62em;margin-left:.16em}
+.hero-copy .box{display:inline;background:var(--fv-r);color:#fff;padding:.06em .14em;text-shadow:none}
+.hero-copy .l3{color:var(--fv-y);font-size:clamp(26px,calc(116 * var(--s)),116px);line-height:1.24;margin-top:.2em}
 
 
 /* 大きな YouTube アウトライン文字 */
@@ -182,30 +182,6 @@ section[id]{scroll-margin-top:calc(24 * var(--s))}
 /* PCではラッパーを透過（子のcatch/crewは従来どおり.hero基準の絶対配置） */
 .hero-lower{display:contents}
 
-/* 実績メダル */
-
-.medal{
-  width:calc(176 * var(--s));height:calc(176 * var(--s));border-radius:50%;
-  background:linear-gradient(145deg,#f9ecbb 0%,#d9ae4a 26%,#b8801f 48%,#f7e3a3 68%,#c9962f 88%,#8f6212 100%);
-  padding:calc(8 * var(--s));box-shadow:0 calc(8 * var(--s)) calc(22 * var(--s)) rgba(0,0,0,.45);transition:transform .4s ease;
-}
-.medal:hover{transform:translateY(-4px)}
-.medal-in{
-  width:100%;height:100%;border-radius:50%;
-  background:radial-gradient(circle at 50% 32%,#22262e 0%,#0d1015 72%,#05070a 100%);
-  box-shadow:inset 0 0 0 1px rgba(248,230,168,.55);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.25;padding:0 9%;
-}
-.medal .lbl{font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;font-weight:600;color:#fff;font-size:max(8px,calc(16 * var(--s)));white-space:nowrap}
-.medal .lbl.sm{font-size:max(8px,calc(15 * var(--s)));opacity:.95}
-.medal .val{
-  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;font-weight:700;color:var(--gold);line-height:1;margin-top:.16em;
-  font-size:max(20px,calc(46 * var(--s)));white-space:nowrap;display:flex;align-items:baseline;justify-content:center;
-}
-.medal .val .u{font-size:.4em;color:#fff;font-weight:700;margin-left:.06em}
-.medal .val .u2{font-size:.52em;color:var(--gold);font-weight:700}
-
-
 /* 下部ナビ（2行×4列） */
 .hero-nav{
   /* 目標サイトと同じ、左に人物のスペースを空けて右側に2行×4列で並べる */
@@ -233,23 +209,47 @@ section[id]{scroll-margin-top:calc(24 * var(--s))}
   /* コピー＋サブは通常フロー（z-index:2で背景の上）で最上部に。実績は下部の帯として絶対配置 */
   /* position:staticで帯の基準を .hero に戻す。z-index:6でhero-main内の帯(z5)を人物(hero-lower z3)より前面へ */
   .hero-main{position:static;z-index:6;grid-template-columns:1fr;padding:calc(150 * var(--s)) 4% 0;gap:0;flex:none}
-  .hero-left{min-width:0;max-width:58%}
-  /* 帯を画面下端まで伸ばし、同じ青グラデのテーマ帯と地続きにする。メダルは追従バーに隠れないよう下パディングで上側に保持 */
-  .hero-right{position:absolute;left:0;right:0;bottom:0;z-index:5;background:var(--grad-h);
-    align-items:center;padding:calc(20 * var(--s)) 4% calc(18 * var(--s));margin:0}
-  /* ①「工務店のYouTube制作なら」を1行に収める上限（7.1vw）／2行目はピュアグロースのみ */
-  .hero-copy .l1{font-size:min(calc(78 * var(--s)),4.7vw)}
-  .hero-copy .l2{margin-top:calc(10 * var(--s))}
-  .hero-copy .l2 b{font-size:min(calc(120 * var(--s)),9vw)}
+  .hero-left{min-width:0;max-width:none}
+  /* ②「YouTube制作なら」が画面幅に収まる上限が9.4vw */
+  .hero-copy .l1{font-size:11vw}
+  .hero-copy .l2{font-size:9.4vw}
+  .hero-copy .l3{font-size:9.4vw}
   /* ③ サブコピーは文字を大きく */
   .hero-sub{margin-top:calc(26 * var(--s));font-size:calc(34 * var(--s));line-height:1.7}
   .hero-sub .br-sp{display:inline}
   .hero-sub .sp-dot{display:none}
-  .medals{justify-content:center;gap:calc(12 * var(--s))}
-  .medal{width:calc(252 * var(--s));height:calc(252 * var(--s))}
-  .medal .lbl,.medal .lbl.sm{font-size:calc(23 * var(--s))}
-  .medal .val{font-size:calc(64 * var(--s))}
-  .medals-note{text-align:center;font-size:calc(22 * var(--s))}
+
+  /* 成功事例集バナー：中間CTAの見せ方を踏襲しつつ、流れる画像を2段にして高さを圧縮 */
+  .hero-case{display:block;position:absolute;left:0;right:0;bottom:0;z-index:5;background:#0d0d0d;overflow:hidden}
+  .hc-link{display:block;position:relative}
+  .hc-thumbs{display:flex;flex-direction:column;gap:2vw;padding:2.4vw 0;overflow:hidden}
+  .hc-row{display:flex;width:max-content;align-items:center;animation:offerMarquee 44s linear infinite}
+  .hc-row.r2{animation-duration:56s;animation-direction:reverse}
+  .hc-row img{
+    width:38vw;height:auto;max-width:none;aspect-ratio:16/9;object-fit:cover;flex:none;
+    margin-right:2vw;border-radius:calc(4 * var(--s));opacity:.52;
+  }
+  .hc-cap{
+    position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:1.2vw;text-align:center;color:#fff;padding:2vw 4%;
+    background:
+      radial-gradient(62% 78% at 50% 50%,rgba(0,0,0,.94) 0%,rgba(0,0,0,.82) 55%,rgba(0,0,0,.45) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.28) 35%,rgba(0,0,0,.28) 65%,rgba(0,0,0,.62) 100%);
+    text-shadow:0 calc(2 * var(--s)) calc(16 * var(--s)) rgba(0,0,0,.85);
+  }
+  .hc-main{display:flex;align-items:center;justify-content:center;gap:1.6vw}
+  .hc-main .laurel{width:8vw;height:auto;flex:none;opacity:.97}
+  .hc-main .laurel.r{transform:scaleX(-1)}
+  .hc-main .txt{font-weight:900;line-height:1.1}
+  .hc-main .t1{display:block;font-size:3.8vw}
+  .hc-main .t2{display:block;margin:.04em 0;font-size:10.4vw;color:var(--gold);letter-spacing:.02em;line-height:1}
+  .hc-main .t3{display:block;font-size:3.6vw}
+  .hc-go{
+    display:inline-flex;align-items:center;gap:.4em;background:var(--accent-lt);color:var(--pg-navy);
+    font-weight:800;font-size:calc(26 * var(--s));border-radius:100px;text-shadow:none;
+    padding:calc(10 * var(--s)) calc(40 * var(--s));
+  }
+  .hc-go b{font-size:.85em}
   /* ④ 薄い「YouTube」アウトライン文字はスマホでは出さない */
   .hero-outline{display:none}
   /* キャッチ＋人物は絶対配置。下部の実績帯の上に立たせ、帯が人物の足元（切れ目）を覆う */
@@ -571,7 +571,7 @@ section[id]{scroll-margin-top:calc(24 * var(--s))}
 /* サムネイルを明るくした分、文字側に影を足して可読性を確保する */
 .offer .wrap{position:relative;z-index:2;text-shadow:0 calc(2 * var(--s)) calc(16 * var(--s)) rgba(0,0,0,.85),0 0 calc(30 * var(--s)) rgba(0,0,0,.6)}
 @media (prefers-reduced-motion:reduce){
-  .offer-row{animation:none}
+  .offer-row,.hc-row{animation:none}
 }
 
 /* ============ REASON ============ */

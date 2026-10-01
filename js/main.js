@@ -6,22 +6,6 @@ document.querySelectorAll("select.pref").forEach(function(sel){
   });
 });
 
-// 実績メダルのカウントアップ
-var io = new IntersectionObserver(function(es){
-  es.forEach(function(e){
-    if(!e.isIntersecting || e.target.dataset.done) return;
-    e.target.dataset.done = "1";
-    var el = e.target, to = parseInt(el.dataset.to,10), dur = 1300, st = null;
-    requestAnimationFrame(function step(ts){
-      if(!st) st = ts;
-      var p = Math.min((ts-st)/dur, 1);
-      el.textContent = Math.round(to * (1 - Math.pow(1-p,3)));
-      if(p < 1) requestAnimationFrame(step);
-    });
-  });
-}, {threshold:.4});
-document.querySelectorAll(".count").forEach(function(c){ io.observe(c); });
-
 // スクロールで表示
 var rio = new IntersectionObserver(function(es){
   es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); rio.unobserve(e.target); } });
